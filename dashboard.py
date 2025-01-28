@@ -43,7 +43,7 @@ def create_org_data():
             "Manages learning management system"
         ],
         "Reports_To": [
-            "Board of Directors", "CEO", "CEO", "CEO", "COO",
+            "Owners", "CEO", "CEO", "CEO", "COO",
             "Director of Innovation & Partnerships", "COO", "COO",
             "COO (Consultant)", "Director of Educational Support", 
             "Director of Educational Support", "Director of Educational Support",
