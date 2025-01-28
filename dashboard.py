@@ -62,7 +62,7 @@ def calculate_influence_score(role):
         return 0.85
     elif 'Dir.' in role or 'Man' in role:
         return 0.75
-    elif 'Sr.' in role or 'Tra' in role:
+    elif 'Sr.' in role or 'Tra' in role or 'Dev' in role:
         return 0.65
     elif 'Lead' in role:
         return 0.55
