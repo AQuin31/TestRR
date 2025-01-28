@@ -1,85 +1,163 @@
 import streamlit as st
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
+import numpy as np
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
-# ------------------- Data Setup -------------------
-role_data = {
-    "Role": [
-        "BJ Dines (CEO)", "Leah Dines (CFO)", "Brian Snyder (Dir. Innovation & Partnerships)",
-        "Josh Leitz (COO)", "LaRae Kendrick (Dir. Educational Support)", "Jeremy Gold (Dir. Virtual Learning)",
-        "Kathe Arnold (Dir. Curriculum)", "Angeline Quinones (Project Manager)", "Micah Stetson (Software Consultant)",
-        "Gordon Gower (Sr. Support & Coaching Lead)", "Kim Schneper (Support & Integration Lead)",
-        "Kevin McCormick (Support & Education Lead)", "Gracie Perez (Special Projects Lead)",
-        "Leslie King (Professional Trainer)", "Heather Caldwell (Professional Trainer)",
-        "Richard Metze (Software Dev)", "Mayowa Akinyemi (Software Dev)",
-        "Joanne Delphia (Sr. Product Designer)", "Seth Morris (LMS Admin)"
-    ],
-    "Responsibilities": [
-        "Overall company strategy and leadership",
-        "Financial oversight, budgeting, and accounting",
-        "Oversees SchoolsPLP Sales, Backbone, and EDS teams",
-        "Manages operations, supports teams, and oversees curriculum",
-        "Leads training, implementation, and support teams",
-        "Manages online learning coordination",
-        "Oversees content development and contractor collaboration",
-        "Leads software development and product design teams",
-        "Provides technical expertise and system architecture guidance",
-        "Provides advanced educational support",
-        "Manages technical and process integration",
-        "Special projects and support initiatives",
-        "Manages unique educational projects",
-        "Conducts training for schools and staff",
-        "Conducts training for schools and staff",
-        "Develops and maintains company software",
-        "Develops and maintains company software",
-        "Leads UX/UI and product experience design",
-        "Manages learning management system"
-    ],
-    "Reports To": [
-        "Board of Directors", "CEO", "CEO", "CEO", "COO",
-        "Director of Innovation & Partnerships", "COO", "COO",
-        "COO (Consultant)", "Director of Educational Support", "Director of Educational Support",
-        "Director of Educational Support", "Director of Educational Support",
-        "Director of Educational Support", "Director of Educational Support",
-        "Project Manager", "Project Manager", "Project Manager", "Project Manager"
-    ]
-}
+# Set page config
+st.set_page_config(layout="wide", page_title="SchoolsPLP Org Structure")
 
-# Convert to DataFrame
-role_df = pd.DataFrame(role_data)
+# Create the organizational data
+def create_org_data():
+    role_data = {
+        "Role": [
+            "BJ Dines (CEO)", "Leah Dines (CFO)", "Brian Snyder (Dir. Innovation & Partnerships)",
+            "Josh Leitz (COO)", "LaRae Kendrick (Dir. Educational Support)", 
+            "Jeremy Gold (Dir. Virtual Learning)", "Kathe Arnold (Dir. Curriculum)",
+            "Angeline Quinones (Project Manager)", "Micah Stetson (Software Consultant)",
+            "Gordon Gower (Sr. Support & Coaching Lead)", "Kim Schneper (Support & Integration Lead)",
+            "Kevin McCormick (Support & Education Lead)", "Gracie Perez (Special Projects Lead)",
+            "Leslie King (Professional Trainer)", "Heather Caldwell (Professional Trainer)",
+            "Richard Metze (Software Dev)", "Mayowa Akinyemi (Software Dev)",
+            "Joanne Delphia (Sr. Product Designer)", "Seth Morris (LMS Admin)"
+        ],
+        "Responsibilities": [
+            "Overall company strategy and leadership",
+            "Financial oversight, budgeting, and accounting",
+            "Oversees SchoolsPLP Sales, Backbone, and EDS teams",
+            "Manages operations, supports teams, and oversees curriculum",
+            "Leads training, implementation, and support teams",
+            "Manages online learning coordination",
+            "Oversees content development and contractor collaboration",
+            "Leads software development and product design teams",
+            "Provides technical expertise and system architecture guidance",
+            "Provides advanced educational support",
+            "Manages technical and process integration",
+            "Special projects and support initiatives",
+            "Manages unique educational projects",
+            "Conducts training for schools and staff",
+            "Conducts training for schools and staff",
+            "Develops and maintains company software",
+            "Develops and maintains company software",
+            "Leads UX/UI and product experience design",
+            "Manages learning management system"
+        ],
+        "Reports_To": [
+            "Board of Directors", "CEO", "CEO", "CEO", "COO",
+            "Director of Innovation & Partnerships", "COO", "COO",
+            "COO (Consultant)", "Director of Educational Support", 
+            "Director of Educational Support", "Director of Educational Support",
+            "Director of Educational Support", "Director of Educational Support",
+            "Director of Educational Support", "Project Manager", "Project Manager",
+            "Project Manager", "Project Manager"
+        ]
+    }
+    return pd.DataFrame(role_data)
 
-# ------------------- Streamlit UI -------------------
-st.title("📊 SchoolsPLP Organizational Dashboard")
+def calculate_influence_score(role):
+    """Calculate influence score based on role type"""
+    if 'CEO' in role:
+        return 0.95
+    elif 'CFO' in role or 'COO' in role:
+        return 0.85
+    elif 'Dir.' in role:
+        return 0.75
+    elif 'Sr.' in role:
+        return 0.65
+    elif 'Lead' in role:
+        return 0.55
+    else:
+        return 0.45
 
-# Dropdown Selection for Role (Without Numbers)
-selected_role = st.selectbox("Select a Role:", role_df["Role"])
+def create_org_chart(df):
+    # Calculate influence scores
+    df['Influence_Score'] = df['Role'].apply(calculate_influence_score)
+    
+    # Sort by influence score and reporting structure
+    df = df.sort_values(['Influence_Score', 'Reports_To'], ascending=[False, True])
+    
+    # Create figure with secondary y-axis
+    fig = go.Figure()
 
-# Display Role Responsibilities (without index numbers)
-st.subheader("Role Responsibilities & Reporting Structure")
-filtered_data = role_df[role_df["Role"] == selected_role][["Responsibilities", "Reports To"]]
-st.table(filtered_data)  # Using `st.table()` instead of `st.write()` for better formatting
+    # Add bars for influence scores
+    fig.add_trace(
+        go.Bar(
+            x=df['Influence_Score'],
+            y=df['Role'],
+            orientation='h',
+            marker=dict(
+                color=df['Influence_Score'],
+                colorscale='Blues',
+                showscale=True,
+                colorbar=dict(
+                    title="Collaborative Decision-Making Index",
+                    titleside="right"
+                )
+            ),
+            name='Influence Score'
+        )
+    )
 
-# ------------------- Heatmap Visualization -------------------
-st.subheader("Organizational Heatmap")
+    # Update layout
+    fig.update_layout(
+        title="SchoolsPLP Organizational Structure",
+        title_x=0.5,
+        showlegend=False,
+        height=800,
+        xaxis=dict(
+            title="Collaborative Decision-Making Index",
+            showgrid=True,
+            range=[0, 1]
+        ),
+        yaxis=dict(
+            title="Roles",
+            showgrid=True,
+            autorange="reversed"
+        ),
+        plot_bgcolor='white'
+    )
+    
+    return fig
 
-# Assign uniform heat levels for visualization
-role_df["Heat Level"] = 1  
+def main():
+    st.title("📊 SchoolsPLP Organizational Dashboard")
+    
+    # Create DataFrame
+    df = create_org_data()
+    
+    # Create two columns
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        # Display organizational chart
+        fig = create_org_chart(df)
+        st.plotly_chart(fig, use_container_width=True)
+    
+    with col2:
+        st.subheader("Role Details")
+        # Create role selector without index
+        selected_role = st.selectbox(
+            "Select a Role:",
+            options=df['Role'].tolist(),
+            index=0
+        )
+        
+        # Display role details
+        role_info = df[df['Role'] == selected_role].iloc[0]
+        st.markdown(f"**Role:** {role_info['Role']}")
+        st.markdown(f"**Responsibilities:** {role_info['Responsibilities']}")
+        st.markdown(f"**Reports To:** {role_info['Reports_To']}")
+        
+        # Add explanation of the visualization
+        st.markdown("---")
+        st.markdown("""
+        **About the Visualization:**
+        
+        The Collaborative Decision-Making Index represents the level of influence 
+        and involvement in decision-making processes. Higher scores indicate 
+        greater responsibility in strategic decisions, while maintaining our 
+        commitment to collaborative input from all team members.
+        """)
 
-# Pivot Data
-heatmap_data = role_df.pivot_table(index="Role", values="Heat Level", aggfunc="sum")
-
-# Plot Heatmap
-fig, ax = plt.subplots(figsize=(8, 6))
-sns.heatmap(
-    heatmap_data,
-    annot=False,  # Remove numbers from heatmap
-    cmap="Blues",
-    linewidths=0.5,
-    cbar=True,
-    ax=ax
-)
-st.pyplot(fig)
-
-# ------------------- Footer -------------------
-st.markdown("💡 *Use the dropdown menu to explore roles and responsibilities!*")
+if __name__ == "__main__":
+    main()
