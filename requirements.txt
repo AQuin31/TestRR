@@ -2,3 +2,6 @@ streamlit
 pandas
 matplotlib
 seaborn
+plotly.graph_objects
+plotly.subplots
+numpy
