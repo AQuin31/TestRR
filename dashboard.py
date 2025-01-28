@@ -61,7 +61,7 @@ filtered_data = role_df[role_df["Role"] == selected_role][["Responsibilities", "
 st.table(filtered_data)  # Using `st.table()` instead of `st.write()` for better formatting
 
 # ------------------- Heatmap Visualization -------------------
-st.subheader("🔍 Organizational Heatmap (No Numbers)")
+st.subheader("Organizational Heatmap")
 
 # Assign uniform heat levels for visualization
 role_df["Heat Level"] = 1  
