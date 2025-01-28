@@ -51,7 +51,7 @@ role_data = {
 role_df = pd.DataFrame(role_data)
 
 # Streamlit App Title
-st.title("📊 Interactive Organizational Dashboard")
+st.title("📊 Interactive SchoolsPLP Organizational Dashboard")
 
 # Dropdown Selection for Role
 selected_role = st.selectbox("Select a Role:", role_df["Role"])
