@@ -16,25 +16,25 @@ role_data = {
         "Joanne Delphia (Sr. Product Designer)", "Seth Morris (LMS Admin)"
     ],
     "Responsibilities": [
-        "CEO - Overall company strategy and leadership",
-        "CFO - Financial oversight, budgeting, and accounting",
-        "Director of Innovation & Partnerships - Oversees SchoolsPLP Sales, Backbone, and EDS teams",
-        "COO - Manages operations, supports teams, and oversees curriculum",
-        "Director of Educational Support - Leads training, implementation, and support teams",
-        "Director of Virtual Learning - Manages online learning coordination",
-        "Director of Curriculum - Oversees content development and contractor collaboration",
-        "Project Manager - Leads software development and product design teams",
-        "Software Consultant - Provides technical expertise and system architecture guidance",
-        "Senior Support & Coaching Lead - Provides advanced educational support",
-        "Support Specialist & Integration Lead - Manages technical and process integration",
-        "Support Specialist & Education Lead - Special projects and support initiatives",
-        "Special Projects Lead - Manages unique educational projects",
-        "Professional Trainer - Conducts training for schools and staff",
-        "Professional Trainer - Conducts training for schools and staff",
-        "Software Developer - Develops and maintains company software",
-        "Software Developer - Develops and maintains company software",
-        "Senior Product Designer - Leads UX/UI and product experience design",
-        "LMS Administrator - Manages learning management system"
+        "Overall company strategy and leadership",
+        "Financial oversight, budgeting, and accounting",
+        "Oversees SchoolsPLP Sales, Backbone, and EDS teams",
+        "Manages operations, supports teams, and oversees curriculum",
+        "Leads training, implementation, and support teams",
+        "Manages online learning coordination",
+        "Oversees content development and contractor collaboration",
+        "Leads software development and product design teams",
+        "Provides technical expertise and system architecture guidance",
+        "Provides advanced educational support",
+        "Manages technical and process integration",
+        "Special projects and support initiatives",
+        "Manages unique educational projects",
+        "Conducts training for schools and staff",
+        "Conducts training for schools and staff",
+        "Develops and maintains company software",
+        "Develops and maintains company software",
+        "Leads UX/UI and product experience design",
+        "Manages learning management system"
     ],
     "Reports To": [
         "Board of Directors", "CEO", "CEO", "CEO", "COO",
@@ -44,16 +44,24 @@ role_data = {
         "Director of Educational Support", "Director of Educational Support",
         "Project Manager", "Project Manager", "Project Manager", "Project Manager"
     ],
-    "Decision-Making Authority": [10, 9, 8, 9, 8, 7, 7, 7, 6, 6, 5, 5, 5, 4, 4, 4, 4, 5, 4]
+    "Department": [
+        "Leadership", "Leadership", "Innovation & Partnerships",
+        "Operations", "Educational Support", "Virtual Learning",
+        "Curriculum", "Software Development", "Consulting",
+        "Support & Coaching", "Integration", "Education",
+        "Special Projects", "Training", "Training",
+        "Software Development", "Software Development",
+        "Product Design", "LMS Administration"
+    ]
 }
 
 # Convert to DataFrame
 role_df = pd.DataFrame(role_data)
 
 # Streamlit App Title
-st.title("📊 Interactive SchoolsPLP Organizational Dashboard")
+st.title("SchoolsPLP Organizational Dashboard")
 
-# Dropdown Selection for Role
+# Dropdown Selection for Role (Without Numbers)
 selected_role = st.selectbox("Select a Role:", role_df["Role"])
 
 # Display Role Responsibilities
@@ -61,14 +69,24 @@ st.subheader("Role Responsibilities & Reporting Structure")
 filtered_data = role_df[role_df["Role"] == selected_role]
 st.write(filtered_data[["Role", "Responsibilities", "Reports To"]])
 
-# Heatmap Visualization
+# Heatmap Visualization (WITHOUT NUMBERS)
 st.subheader("🔍 Decision-Making Authority Heatmap")
 fig, ax = plt.subplots(figsize=(8, 6))
-heatmap_data = role_df.sort_values(by="Decision-Making Authority", ascending=False)
+
+# Assigning a heat level for visualization (all roles are assigned the same importance visually)
+role_df["Heat Level"] = 1  # Placeholder since we're not displaying decision-making numbers
+
+heatmap_data = role_df.pivot_table(index="Role", values="Heat Level", aggfunc="sum")
+
 sns.heatmap(
-    heatmap_data.set_index("Role")[["Decision-Making Authority"]],
-    annot=True, cmap="Blues", linewidths=0.5, cbar=True, ax=ax
+    heatmap_data,
+    annot=False,  # No numbers
+    cmap="Blues",
+    linewidths=0.5,
+    cbar=True,
+    ax=ax
 )
+
 st.pyplot(fig)
 
 # Footer
