@@ -118,7 +118,7 @@ def create_org_chart(df):
     return fig
 
 def main():
-    st.title("📊 SchoolsPLP Organizational Dashboard")
+    st.title("SchoolsPLP Organizational Dashboard")
     
     # Create DataFrame
     df = create_org_data()
