@@ -59,15 +59,15 @@ role_data = {
 role_df = pd.DataFrame(role_data)
 
 # Streamlit App Title
-st.title("SchoolsPLP Organizational Dashboard")
+st.title("📊 SchoolsPLP Organizational Dashboard")
 
 # Dropdown Selection for Role (Without Numbers)
 selected_role = st.selectbox("Select a Role:", role_df["Role"])
 
-# Display Role Responsibilities
+# Display Role Responsibilities (without index numbers)
 st.subheader("Role Responsibilities & Reporting Structure")
 filtered_data = role_df[role_df["Role"] == selected_role]
-st.write(filtered_data[["Role", "Responsibilities", "Reports To"]])
+st.write(filtered_data[["Responsibilities", "Reports To"]].set_index("Responsibilities"))
 
 # Heatmap Visualization (WITHOUT NUMBERS)
 st.subheader("🔍 Decision-Making Authority Heatmap")
@@ -86,8 +86,3 @@ sns.heatmap(
     cbar=True,
     ax=ax
 )
-
-st.pyplot(fig)
-
-# Footer
-st.markdown("💡 *Use the dropdown menu to explore roles and responsibilities!*")
