@@ -44,7 +44,7 @@ def create_org_data():
         ],
         "Reports_To": [
             "Owners", "CEO", "CEO", "CEO", "COO",
-            "Director of Innovation & Partnerships", "COO", "COO",
+            "Leadership Team", "Leadership Team", "Leadership Team",
             "COO (Consultant)", "Director of Educational Support", 
             "Director of Educational Support", "Director of Educational Support",
             "Director of Educational Support", "Director of Educational Support",
