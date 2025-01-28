@@ -3,7 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# Define Role Responsibility Data
+# ------------------- Data Setup -------------------
 role_data = {
     "Role": [
         "BJ Dines (CEO)", "Leah Dines (CFO)", "Brian Snyder (Dir. Innovation & Partnerships)",
@@ -43,41 +43,43 @@ role_data = {
         "Director of Educational Support", "Director of Educational Support",
         "Director of Educational Support", "Director of Educational Support",
         "Project Manager", "Project Manager", "Project Manager", "Project Manager"
-    ],
-    "Department": [
-        "Leadership", "Leadership", "Innovation & Partnerships",
-        "Operations", "Educational Support", "Virtual Learning",
-        "Curriculum", "Software Development", "Consulting",
-        "Support & Coaching", "Integration", "Education",
-        "Special Projects", "Training", "Training",
-        "Software Development", "Software Development",
-        "Product Design", "LMS Administration"
     ]
 }
 
 # Convert to DataFrame
 role_df = pd.DataFrame(role_data)
 
-# Streamlit App Title
-st.title("📊 Interactive Organizational Dashboard")
+# ------------------- Streamlit UI -------------------
+st.title("📊 SchoolsPLP Organizational Dashboard")
 
-# Dropdown Selection for Role
+# Dropdown Selection for Role (Without Numbers)
 selected_role = st.selectbox("Select a Role:", role_df["Role"])
 
-# Display Role Responsibilities
+# Display Role Responsibilities (without index numbers)
 st.subheader("Role Responsibilities & Reporting Structure")
-filtered_data = role_df[role_df["Role"] == selected_role]
-st.write(filtered_data[["Role", "Responsibilities", "Reports To"]])
+filtered_data = role_df[role_df["Role"] == selected_role][["Responsibilities", "Reports To"]]
+st.table(filtered_data)  # Using `st.table()` instead of `st.write()` for better formatting
 
-# Heatmap Visualization
-st.subheader("🔍 Decision-Making Authority Heatmap")
+# ------------------- Heatmap Visualization -------------------
+st.subheader("🔍 Organizational Heatmap (No Numbers)")
+
+# Assign uniform heat levels for visualization
+role_df["Heat Level"] = 1  
+
+# Pivot Data
+heatmap_data = role_df.pivot_table(index="Role", values="Heat Level", aggfunc="sum")
+
+# Plot Heatmap
 fig, ax = plt.subplots(figsize=(8, 6))
-heatmap_data = role_df.sort_values(by="Decision-Making Authority", ascending=False)
 sns.heatmap(
-    heatmap_data.set_index("Role")[["Decision-Making Authority"]],
-    annot=True, cmap="Blues", linewidths=0.5, cbar=True, ax=ax
+    heatmap_data,
+    annot=False,  # Remove numbers from heatmap
+    cmap="Blues",
+    linewidths=0.5,
+    cbar=True,
+    ax=ax
 )
 st.pyplot(fig)
 
-# Footer
+# ------------------- Footer -------------------
 st.markdown("💡 *Use the dropdown menu to explore roles and responsibilities!*")
