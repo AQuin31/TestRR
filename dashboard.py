@@ -303,8 +303,8 @@ def create_team_visualization(selected_team=None):
         ),
         textposition="middle center",
         textfont=dict(
-            color='white',
-            size=13,       # Slightly smaller font size to ensure text fits
+            color='black',  # Changed to black text
+            size=14,       # Slightly larger font size
             family="Arial, sans-serif"
         ),
         hoverinfo='text',
@@ -315,10 +315,20 @@ def create_team_visualization(selected_team=None):
         showlegend=False,
         hovermode='closest',
         margin=dict(b=20,l=5,r=5,t=40),
-        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        xaxis=dict(
+            showgrid=False, 
+            zeroline=False, 
+            showticklabels=False,
+            range=[-1.5, 1.5]  # Increased range for more space
+        ),
+        yaxis=dict(
+            showgrid=False, 
+            zeroline=False, 
+            showticklabels=False,
+            range=[-1.5, 1.5]  # Increased range for more space
+        ),
         plot_bgcolor='white',
-        height=600
+        height=700  # Increased height
     )
     
     return fig
