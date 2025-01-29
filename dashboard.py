@@ -8,27 +8,27 @@ def create_team_data():
                 "BJ Dines": {
                     "Role": "CEO",
                     "Responsibilities": "Overall company leadership and strategy",
-                    "Reports_To": "Board of Directors"
+                    
                 },
                 "Leah Dines": {
                     "Role": "CFO",
                     "Responsibilities": "Financial oversight and management",
-                    "Reports_To": "CEO"
+                  
                 },
                 "Brian Snyder": {
                     "Role": "Director of Innovation and Partnerships",
                     "Responsibilities": "Oversees Sales, Backbone, and Virtual Instruction",
-                    "Reports_To": "CEO"
+                    "Reports_To": "CEO & CFO"
                 },
                 "Josh Leitz": {
                     "Role": "Chief Operations Officer",
                     "Responsibilities": "Oversees operations and curriculum",
-                    "Reports_To": "CEO"
+                    "Reports_To": "CEO & CFO"
                 },
                 "LaRae Kendrick": {
                     "Role": "Director of Educational Support and Implementation",
                     "Responsibilities": "Leads educational support teams",
-                    "Reports_To": "CEO"
+                    "Reports_To": "CEO & CFO"
                 }
             },
             "Position": [0, 0]  # Center position
