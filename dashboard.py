@@ -288,7 +288,8 @@ def create_team_visualization(selected_team=None):
         marker=dict(
             color=node_colors,
             size=node_sizes,
-            line=dict(color='white', width=2)
+            line=dict(color='white', width=2),
+            opacity=1.0  # Set full opacity
         ),
         textposition="middle center",
         textfont=dict(
