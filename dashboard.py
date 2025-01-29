@@ -219,6 +219,18 @@ def create_team_visualization(selected_team=None):
     teams = create_team_data()
     fig = go.Figure()
 
+    # Define ROYGBIV color map
+    color_map = {
+        "Leadership": '#FF0000',     # Red
+        "Finance": '#FF7F00',        # Orange
+        "Sales": '#FFFF00',          # Yellow
+        "Virtual Instruction": '#00FF00',  # Green
+        "Support": '#0000FF',        # Blue
+        "Curriculum": '#4B0082',     # Indigo
+        "Development": '#8F00FF',    # Violet
+        "Training": '#FF69B4'        # Pink
+    }
+
     # Add connections between teams
     for team, data in teams.items():
         x0, y0 = data["Position"]
@@ -230,36 +242,19 @@ def create_team_visualization(selected_team=None):
                     reports_to = member.get("Reports_To", "")
                     if reports_to == "Leadership Team" and team == "Leadership":
                         x1, y1 = other_data["Position"]
-                        # Check if any team member reports to a role in this team
-                        reports_to_this_team = False
-                        for member_data in other_data["Team Members"].values():
-                            member_reports_to = member_data.get("Reports_To", "")
-                            for leader in data["Team Members"].values():
-                                leader_role = leader.get("Role", "")
-                                if member_reports_to in [leader_role, "Leadership Team", "CEO", "COO", "CFO"]:
-                                    reports_to_this_team = True
-                                    break
-                            if reports_to_this_team:
-                                break
-                        
-                        if reports_to_this_team:
-                            color = '#1f77b4' if selected_team in [team, other_team] else '#E1E5E8'
-                            width = 2 if selected_team in [team, other_team] else 1
-                            fig.add_trace(go.Scatter(
-                                x=[x0, x1], y=[y0, y1],
-                                mode='lines',
-                                line=dict(color=color, width=width),
-                                hoverinfo='none',
-                                showlegend=False
-                            ))
-                    elif any(reports_to == tm.get("Role", "") for tm in data["Team Members"].values()):
-                        x1, y1 = other_data["Position"]
-                        color = '#1f77b4' if selected_team in [team, other_team] else '#E1E5E8'
-                        width = 2 if selected_team in [team, other_team] else 1
                         fig.add_trace(go.Scatter(
                             x=[x0, x1], y=[y0, y1],
                             mode='lines',
-                            line=dict(color=color, width=width),
+                            line=dict(color='#808080', width=1),
+                            hoverinfo='none',
+                            showlegend=False
+                        ))
+                    elif any(reports_to == tm.get("Role", "") for tm in data["Team Members"].values()):
+                        x1, y1 = other_data["Position"]
+                        fig.add_trace(go.Scatter(
+                            x=[x0, x1], y=[y0, y1],
+                            mode='lines',
+                            line=dict(color='#808080', width=1),
                             hoverinfo='none',
                             showlegend=False
                         ))
@@ -274,22 +269,16 @@ def create_team_visualization(selected_team=None):
     for team, data in teams.items():
         node_x.append(data["Position"][0])
         node_y.append(data["Position"][1])
-        node_text.append(team)  # Just the team name, no member count
+        node_text.append(team)
         
-        # Set fixed sizes - larger base size to accommodate longer text
+        # Set fixed sizes and ROYGBIV colors
         if team == "Leadership":
-            node_sizes.append(120)  # Larger size for Leadership
+            node_sizes.append(150)  # Larger size for Leadership
         else:
-            node_sizes.append(85)   # Increased standard size for all other departments to fit text
-
-        # Set colors based on selection
-        if selected_team:
-            if team == selected_team:
-                node_colors.append('#1f77b4')
-            else:
-                node_colors.append('#E1E5E8')
-        else:
-            node_colors.append('lightblue')
+            node_sizes.append(100)  # Standard size for all other departments
+        
+        # Apply colors from color map
+        node_colors.append(color_map[team])
 
     fig.add_trace(go.Scatter(
         x=node_x,
@@ -303,10 +292,11 @@ def create_team_visualization(selected_team=None):
         ),
         textposition="middle center",
         textfont=dict(
-            color='black',  # Changed to black text
-            size=14,       # Slightly larger font size
+            color='black',  # Text color for department names
+            size=14,       # Font size
             family="Arial, sans-serif"
         ),
+        hovertext=node_text,
         hoverinfo='text',
         showlegend=False
     ))
@@ -334,7 +324,7 @@ def create_team_visualization(selected_team=None):
     return fig
 
 def main():
-    st.markdown("<h1 style='color: #1f77b4;'>SchoolsPLP Organizational Structure</h1>", unsafe_allow_html=True)
+    st.title("SchoolsPLP Organizational Structure")
     
     teams = create_team_data()
     
@@ -357,32 +347,9 @@ def main():
             if "Responsibilities" in member_data:
                 st.markdown(f"**Responsibilities:** {member_data['Responsibilities']}")
             st.markdown(f"**Reports To:** {member_data['Reports_To']}")
-
-        # Add manager note
-        st.markdown("---")
-        st.markdown("""
-        **Note:** The Leadership Team consists of BJ Dines (CEO), 
-        Leah Dines (CFO), Brian Snyder (Director of Innovation and Partnerships), 
-        LaRae Kendrick (Director of Educational Support), and 
-        Josh Leitz (Chief Operations Officer).
-        """)
-        
-        st.markdown("""
-        If you have any concerns or need additional support, 
-        please reach out to either Brian or Josh, who will work 
-        together to provide assistance.
-        """)
     
     with col1:
         st.plotly_chart(create_team_visualization(selected_team), use_container_width=True)
-        
-        st.markdown("""
-        **Understanding the Visualization:**
-        - Each circle represents a department
-        - Size indicates number of team members
-        - Lines show reporting relationships
-        - Click on departments to see details
-        """)
 
 if __name__ == "__main__":
     main()
