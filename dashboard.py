@@ -273,9 +273,9 @@ def create_team_visualization(selected_team=None):
         
         # Set fixed sizes and ROYGBIV colors
         if team == "Leadership":
-            node_sizes.append(150)  # Larger size for Leadership
+            node_sizes.append(180)  # Increased size for Leadership (was 150)
         else:
-            node_sizes.append(100)  # Standard size for all other departments
+            node_sizes.append(120)  # Increased standard size for all other departments (was 100)
         
         # Apply colors from color map
         node_colors.append(color_map[team])
