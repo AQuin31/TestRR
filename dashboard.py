@@ -121,6 +121,32 @@ def create_team_data():
             "Key Collaborations": ["Leadership", "Curriculum", "Educational Support"],
             "Position": [1, -1]
         }
+         "Sales": {
+            "Team Members": {
+                "Brian Snyder": {
+                    "Role": "Project Manager",
+                    "Responsibilities": "Leads software development and product design teams",
+                    "Key Projects": ["Product Development", "Team Management", "Release Planning"]
+                },
+                "Richard Metze (Software Dev)": {
+                    "Role": "Software Developer",
+                    "Responsibilities": "Develops and maintains company software",
+                    "Key Projects": ["Software Development", "Code Maintenance", "Feature Implementation"]
+                },
+                "Mayowa Akinyemi (Software Dev)": {
+                    "Role": "Software Developer",
+                    "Responsibilities": "Develops and maintains company software",
+                    "Key Projects": ["Software Development", "Code Maintenance", "Feature Implementation"]
+                },
+                "Joanne Delphia (Sr. Product Designer)": {
+                    "Role": "Senior Product Designer",
+                    "Responsibilities": "Leads UX/UI and product experience design",
+                    "Key Projects": ["UX Design", "UI Implementation", "User Research"]
+                },
+                "Seth Morris (LMS Admin)": {
+                    "Role": "LMS Administrator",
+                    "Responsibilities": "Manages learning management system",
+                    "Key Projects": ["LMS Administration", "System Maintenance", "User Support"]
     }
 
 def create_team_visualization(selected_team=None):
