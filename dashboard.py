@@ -1,156 +1,157 @@
 import streamlit as st
-import graphviz
-import pandas as pd
+import networkx as nx
+import plotly.graph_objects as go
+from collections import defaultdict
 
 # Set page configuration
-st.set_page_config(page_title="SchoolsPLP Organization Chart", layout="wide")
+st.set_page_config(page_title="SchoolsPLP Team Connections", layout="wide")
 
-def create_org_data():
+def create_team_data():
     return {
-        "Board of Directors": [],
-        "BJ Dines (CEO)": ["Board of Directors"],
-        "Leah Dines (CFO)": ["BJ Dines (CEO)"],
-        "Josh Leitz (COO)": ["BJ Dines (CEO)"],
-        "Brian Snyder (Dir. Innovation & Partnerships)": ["BJ Dines (CEO)"],
-        "LaRae Kendrick (Dir. Educational Support)": ["Josh Leitz (COO)"],
-        "Jeremy Gold (Dir. Virtual Learning)": ["Brian Snyder (Dir. Innovation & Partnerships)"],
-        "Kathe Arnold (Dir. Curriculum)": ["Josh Leitz (COO)"],
-        "Angeline Quinones (Project Manager)": ["Josh Leitz (COO)"],
-        "Micah Stetson (Software Consultant)": ["Josh Leitz (COO)"],
-        "Gordon Gower (Sr. Support & Coaching Lead)": ["LaRae Kendrick (Dir. Educational Support)"],
-        "Kim Schneper (Support & Integration Lead)": ["LaRae Kendrick (Dir. Educational Support)"],
-        "Kevin McCormick (Support & Education Lead)": ["LaRae Kendrick (Dir. Educational Support)"],
-        "Gracie Perez (Special Projects Lead)": ["LaRae Kendrick (Dir. Educational Support)"],
-        "Leslie King (Professional Trainer)": ["LaRae Kendrick (Dir. Educational Support)"],
-        "Heather Caldwell (Professional Trainer)": ["LaRae Kendrick (Dir. Educational Support)"],
-        "Richard Metze (Software Dev)": ["Angeline Quinones (Project Manager)"],
-        "Mayowa Akinyemi (Software Dev)": ["Angeline Quinones (Project Manager)"],
-        "Joanne Delphia (Sr. Product Designer)": ["Angeline Quinones (Project Manager)"],
-        "Seth Morris (LMS Admin)": ["Angeline Quinones (Project Manager)"]
+        "Leadership": {
+            "Team Members": ["BJ Dines (CEO)", "Leah Dines (CFO)", "Josh Leitz (COO)", 
+                           "Brian Snyder (Dir. Innovation & Partnerships)"],
+            "Key Collaborations": ["All Teams", "Finance", "Operations", "Sales & Partnerships"]
+        },
+        "Educational Support": {
+            "Team Members": ["LaRae Kendrick (Dir. Educational Support)", 
+                           "Gordon Gower (Sr. Support & Coaching Lead)",
+                           "Kim Schneper (Support & Integration Lead)",
+                           "Kevin McCormick (Support & Education Lead)",
+                           "Leslie King (Professional Trainer)",
+                           "Heather Caldwell (Professional Trainer)"],
+            "Key Collaborations": ["Product Team", "Curriculum", "Virtual Learning"]
+        },
+        "Product Team": {
+            "Team Members": ["Angeline Quinones (Project Manager)",
+                           "Richard Metze (Software Dev)",
+                           "Mayowa Akinyemi (Software Dev)",
+                           "Joanne Delphia (Sr. Product Designer)",
+                           "Seth Morris (LMS Admin)"],
+            "Key Collaborations": ["Educational Support", "Curriculum", "Virtual Learning"]
+        },
+        "Curriculum": {
+            "Team Members": ["Kathe Arnold (Dir. Curriculum)"],
+            "Key Collaborations": ["Educational Support", "Virtual Learning", "Product Team"]
+        },
+        "Virtual Learning": {
+            "Team Members": ["Jeremy Gold (Dir. Virtual Learning)"],
+            "Key Collaborations": ["Educational Support", "Curriculum", "Product Team"]
+        }
     }
-
-def create_department_colors():
-    return {
-        "Board of Directors": "lightgrey",
-        "CEO": "#E6F3FF",
-        "CFO": "#CCE7FF",
-        "COO": "#CCE7FF",
-        "Director": "#E6F3FF",
-        "Lead": "#F0F9FF",
-        "Manager": "#F0F9FF",
-        "Developer": "#F8FCFF",
-        "Designer": "#F8FCFF",
-        "Trainer": "#F8FCFF",
-        "Admin": "#F8FCFF",
-        "Consultant": "#F8FCFF"
-    }
-
-def get_node_color(role):
-    colors = create_department_colors()
-    if "Board of Directors" in role:
-        return colors["Board of Directors"]
-    elif "CEO" in role:
-        return colors["CEO"]
-    elif "CFO" in role:
-        return colors["CFO"]
-    elif "COO" in role:
-        return colors["COO"]
-    elif "Dir." in role:
-        return colors["Director"]
-    elif "Lead" in role:
-        return colors["Lead"]
-    elif "Manager" in role:
-        return colors["Manager"]
-    elif "Dev" in role:
-        return colors["Developer"]
-    elif "Designer" in role:
-        return colors["Designer"]
-    elif "Trainer" in role:
-        return colors["Trainer"]
-    elif "Admin" in role:
-        return colors["Admin"]
-    elif "Consultant" in role:
-        return colors["Consultant"]
-    return "#FFFFFF"
-
-def create_org_chart():
-    # Create a new directed graph
-    dot = graphviz.Digraph()
-    dot.attr(rankdir='TB')
-    
-    # Set graph attributes
-    dot.attr('node', shape='box', 
-            style='filled,rounded', 
-            fontname='Arial',
-            margin='0.3,0.1')
-    dot.attr('edge', color='#666666')
-    
-    # Get organizational data
-    org_data = create_org_data()
-    
-    # Add all nodes first
-    for role in org_data.keys():
-        dot.node(role, role, fillcolor=get_node_color(role))
-    
-    # Add edges (reporting relationships)
-    for role, reports_to in org_data.items():
-        for superior in reports_to:
-            dot.edge(superior, role)
-    
-    return dot
 
 def create_responsibilities_data():
     return {
-        "BJ Dines (CEO)": "Overall company strategy and leadership",
-        "Leah Dines (CFO)": "Financial oversight, budgeting, and accounting",
-        "Josh Leitz (COO)": "Manages operations, supports teams, and oversees curriculum",
-        "Brian Snyder (Dir. Innovation & Partnerships)": "Oversees SchoolsPLP Sales, Backbone, and EDS teams",
-        "LaRae Kendrick (Dir. Educational Support)": "Leads training, implementation, and support teams",
-        "Jeremy Gold (Dir. Virtual Learning)": "Manages online learning coordination",
-        "Kathe Arnold (Dir. Curriculum)": "Oversees content development and contractor collaboration",
-        "Angeline Quinones (Project Manager)": "Leads software development and product design teams",
-        "Micah Stetson (Software Consultant)": "Provides technical expertise and system architecture guidance",
-        "Gordon Gower (Sr. Support & Coaching Lead)": "Provides advanced educational support",
-        "Kim Schneper (Support & Integration Lead)": "Manages technical and process integration",
-        "Kevin McCormick (Support & Education Lead)": "Special projects and support initiatives",
-        "Gracie Perez (Special Projects Lead)": "Manages unique educational projects",
-        "Leslie King (Professional Trainer)": "Conducts training for schools and staff",
-        "Heather Caldwell (Professional Trainer)": "Conducts training for schools and staff",
-        "Richard Metze (Software Dev)": "Develops and maintains company software",
-        "Mayowa Akinyemi (Software Dev)": "Develops and maintains company software",
-        "Joanne Delphia (Sr. Product Designer)": "Leads UX/UI and product experience design",
-        "Seth Morris (LMS Admin)": "Manages learning management system"
+        "BJ Dines (CEO)": {
+            "Responsibilities": "Overall company strategy and leadership",
+            "Team": "Leadership",
+            "Key Projects": ["Strategic Planning", "Company Growth", "Partnership Development"],
+            "Common Collaborations": ["Executive Team", "Board of Directors", "All Department Heads"]
+        },
+        "Leah Dines (CFO)": {
+            "Responsibilities": "Financial oversight, budgeting, and accounting",
+            "Team": "Leadership",
+            "Key Projects": ["Budget Planning", "Financial Reporting", "Resource Allocation"],
+            "Common Collaborations": ["CEO", "Department Heads", "External Auditors"]
+        },
+        # Add all other roles similarly...
     }
 
+def create_team_network():
+    teams = create_team_data()
+    G = nx.Graph()
+    
+    # Add nodes for each team
+    for team in teams:
+        G.add_node(team)
+    
+    # Add edges based on collaborations
+    for team, data in teams.items():
+        for collab in data["Key Collaborations"]:
+            if collab in teams:
+                G.add_edge(team, collab)
+    
+    # Calculate layout
+    pos = nx.spring_layout(G)
+    
+    # Create the visualization
+    edge_trace = go.Scatter(
+        x=[], y=[],
+        line=dict(width=2, color='#888'),
+        hoverinfo='none',
+        mode='lines')
+
+    for edge in G.edges():
+        x0, y0 = pos[edge[0]]
+        x1, y1 = pos[edge[1]]
+        edge_trace['x'] += (x0, x1, None)
+        edge_trace['y'] += (y0, y1, None)
+
+    node_trace = go.Scatter(
+        x=[], y=[],
+        text=[],
+        mode='markers+text',
+        textposition="top center",
+        hoverinfo='text',
+        marker=dict(
+            showscale=False,
+            size=30,
+            line_width=2))
+
+    for node in G.nodes():
+        x, y = pos[node]
+        node_trace['x'] += tuple([x])
+        node_trace['y'] += tuple([y])
+        node_trace['text'] += tuple([node])
+
+    fig = go.Figure(data=[edge_trace, node_trace],
+                   layout=go.Layout(
+                       showlegend=False,
+                       hovermode='closest',
+                       margin=dict(b=20,l=5,r=5,t=40),
+                       xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                       yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
+                   )
+    
+    return fig
+
 def main():
-    st.title("SchoolsPLP Organizational Structure")
+    st.title("SchoolsPLP Team Connections")
     
-    # Create tabs
-    tab1, tab2 = st.tabs(["Organizational Chart", "Role Details"])
+    col1, col2 = st.columns([3, 2])
     
-    with tab1:
-        # Display the organizational chart
-        st.graphviz_chart(create_org_chart())
+    with col1:
+        st.plotly_chart(create_team_network(), use_container_width=True)
         
         st.markdown("""
-        **Understanding the Chart:**
-        - Boxes show reporting relationships from top to bottom
-        - Colors indicate different organizational levels
-        - Lines show direct reporting relationships
+        **Understanding Team Connections:**
+        - Nodes represent different teams within SchoolsPLP
+        - Lines show primary collaboration paths
+        - Closer nodes indicate more frequent collaboration
         """)
     
-    with tab2:
-        # Create role selector and display responsibilities
-        responsibilities = create_responsibilities_data()
-        selected_role = st.selectbox(
-            "Select a Role to View Details:",
-            list(responsibilities.keys())
-        )
+    with col2:
+        teams = create_team_data()
+        selected_team = st.selectbox("Select a Team:", list(teams.keys()))
         
-        st.markdown("### Role Details")
-        st.markdown(f"**Role:** {selected_role}")
-        st.markdown(f"**Responsibilities:** {responsibilities[selected_role]}")
-        st.markdown(f"**Reports To:** {create_org_data()[selected_role][0]}")
+        st.markdown(f"### {selected_team} Team")
+        
+        # Team Members
+        st.markdown("**Team Members:**")
+        for member in teams[selected_team]["Team Members"]:
+            st.markdown(f"- {member}")
+            
+        # Key Collaborations
+        st.markdown("\n**Key Collaborations:**")
+        for collab in teams[selected_team]["Key Collaborations"]:
+            st.markdown(f"- {collab}")
+            
+        # Additional context box
+        st.markdown("---")
+        st.markdown("""
+        **Note:** This view complements the existing org chart by showing how 
+        teams typically collaborate and work together across the organization.
+        """)
 
 if __name__ == "__main__":
     main()
