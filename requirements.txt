@@ -6,5 +6,5 @@ plotly
 numpy
 graphviz
 networkx
-plotly.graph_objects
+plotly
 collections
