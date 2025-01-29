@@ -8,39 +8,119 @@ st.set_page_config(page_title="SchoolsPLP Team Connections", layout="wide")
 def create_team_data():
     return {
         "Leadership": {
-            "Team Members": ["BJ Dines (CEO)", "Leah Dines (CFO)", "Josh Leitz (COO)", 
-                           "Brian Snyder (Dir. Innovation & Partnerships)"],
+            "Team Members": {
+                "BJ Dines (CEO)": {
+                    "Role": "Chief Executive Officer",
+                    "Responsibilities": "Overall company strategy and leadership",
+                    "Key Projects": ["Strategic Planning", "Company Growth", "Partnership Development"]
+                },
+                "Leah Dines (CFO)": {
+                    "Role": "Chief Financial Officer",
+                    "Responsibilities": "Financial oversight, budgeting, and accounting",
+                    "Key Projects": ["Budget Planning", "Financial Analysis", "Resource Allocation"]
+                },
+                "Josh Leitz (COO)": {
+                    "Role": "Chief Operating Officer",
+                    "Responsibilities": "Manages operations, supports teams, and oversees curriculum",
+                    "Key Projects": ["Operations Management", "Team Coordination", "Process Improvement"]
+                },
+                "Brian Snyder (Dir. Innovation & Partnerships)": {
+                    "Role": "Director of Innovation & Partnerships",
+                    "Responsibilities": "Oversees SchoolsPLP Sales, Backbone, and EDS teams",
+                    "Key Projects": ["Partnership Development", "Innovation Initiatives", "Sales Strategy"]
+                }
+            },
             "Key Collaborations": ["Educational Support", "Product", "Curriculum", "Virtual Learning"],
-            "Position": [0, 0]  # Central position
+            "Position": [0, 0]
         },
         "Educational Support": {
-            "Team Members": ["LaRae Kendrick (Dir. Educational Support)", 
-                           "Gordon Gower (Sr. Support & Coaching Lead)",
-                           "Kim Schneper (Support & Integration Lead)",
-                           "Kevin McCormick (Support & Education Lead)",
-                           "Leslie King (Professional Trainer)",
-                           "Heather Caldwell (Professional Trainer)"],
+            "Team Members": {
+                "LaRae Kendrick (Dir. Educational Support)": {
+                    "Role": "Director of Educational Support",
+                    "Responsibilities": "Leads training, implementation, and support teams",
+                    "Key Projects": ["Training Program Development", "Support Strategy", "Implementation Planning"]
+                },
+                "Gordon Gower (Sr. Support & Coaching Lead)": {
+                    "Role": "Senior Support & Coaching Lead",
+                    "Responsibilities": "Provides advanced educational support",
+                    "Key Projects": ["Support Team Leadership", "Coaching Program", "Quality Assurance"]
+                },
+                "Kim Schneper (Support & Integration Lead)": {
+                    "Role": "Support & Integration Lead",
+                    "Responsibilities": "Manages technical and process integration",
+                    "Key Projects": ["Integration Management", "Process Development", "Technical Support"]
+                },
+                "Kevin McCormick (Support & Education Lead)": {
+                    "Role": "Support & Education Lead",
+                    "Responsibilities": "Special projects and support initiatives",
+                    "Key Projects": ["Education Programs", "Support Projects", "Team Training"]
+                },
+                "Leslie King (Professional Trainer)": {
+                    "Role": "Professional Trainer",
+                    "Responsibilities": "Conducts training for schools and staff",
+                    "Key Projects": ["School Training", "Staff Development", "Training Materials"]
+                },
+                "Heather Caldwell (Professional Trainer)": {
+                    "Role": "Professional Trainer",
+                    "Responsibilities": "Conducts training for schools and staff",
+                    "Key Projects": ["School Training", "Staff Development", "Training Materials"]
+                }
+            },
             "Key Collaborations": ["Leadership", "Product", "Curriculum"],
-            "Position": [-1, 1]  # Top left
+            "Position": [-1, 1]
         },
         "Product": {
-            "Team Members": ["Angeline Quinones (Project Manager)",
-                           "Richard Metze (Software Dev)",
-                           "Mayowa Akinyemi (Software Dev)",
-                           "Joanne Delphia (Sr. Product Designer)",
-                           "Seth Morris (LMS Admin)"],
+            "Team Members": {
+                "Angeline Quinones (Project Manager)": {
+                    "Role": "Project Manager",
+                    "Responsibilities": "Leads software development and product design teams",
+                    "Key Projects": ["Product Development", "Team Management", "Release Planning"]
+                },
+                "Richard Metze (Software Dev)": {
+                    "Role": "Software Developer",
+                    "Responsibilities": "Develops and maintains company software",
+                    "Key Projects": ["Software Development", "Code Maintenance", "Feature Implementation"]
+                },
+                "Mayowa Akinyemi (Software Dev)": {
+                    "Role": "Software Developer",
+                    "Responsibilities": "Develops and maintains company software",
+                    "Key Projects": ["Software Development", "Code Maintenance", "Feature Implementation"]
+                },
+                "Joanne Delphia (Sr. Product Designer)": {
+                    "Role": "Senior Product Designer",
+                    "Responsibilities": "Leads UX/UI and product experience design",
+                    "Key Projects": ["UX Design", "UI Implementation", "User Research"]
+                },
+                "Seth Morris (LMS Admin)": {
+                    "Role": "LMS Administrator",
+                    "Responsibilities": "Manages learning management system",
+                    "Key Projects": ["LMS Administration", "System Maintenance", "User Support"]
+                }
+            },
             "Key Collaborations": ["Leadership", "Educational Support", "Curriculum"],
-            "Position": [1, 1]  # Top right
+            "Position": [1, 1]
         },
         "Curriculum": {
-            "Team Members": ["Kathe Arnold (Dir. Curriculum)"],
+            "Team Members": {
+                "Kathe Arnold (Dir. Curriculum)": {
+                    "Role": "Director of Curriculum",
+                    "Responsibilities": "Oversees content development and contractor collaboration",
+                    "Key Projects": ["Curriculum Development", "Content Strategy", "Quality Assessment"]
+                }
+            },
             "Key Collaborations": ["Leadership", "Educational Support", "Product", "Virtual Learning"],
-            "Position": [-1, -1]  # Bottom left
+            "Position": [-1, -1]
         },
         "Virtual Learning": {
-            "Team Members": ["Jeremy Gold (Dir. Virtual Learning)"],
+            "Team Members": {
+                "Jeremy Gold (Dir. Virtual Learning)": {
+                    "Role": "Director of Virtual Learning",
+                    "Responsibilities": "Manages online learning coordination",
+                    "Key Projects": ["Virtual Program Management", "Online Learning Strategy", "Technology Integration"]
+                }
+            },
             "Key Collaborations": ["Leadership", "Curriculum", "Educational Support"],
-            "Position": [1, -1]  # Bottom right
+            "Position": [1, -1]
         }
     }
 
@@ -109,6 +189,8 @@ def main():
     
     col1, col2 = st.columns([3, 2])
     
+    teams = create_team_data()
+    
     with col1:
         st.plotly_chart(create_team_visualization(), use_container_width=True)
         
@@ -120,26 +202,34 @@ def main():
         """)
     
     with col2:
-        teams = create_team_data()
+        # First dropdown for team selection
         selected_team = st.selectbox("Select a Team:", list(teams.keys()))
         
-        st.markdown(f"### {selected_team}")
+        # Second dropdown for team member selection
+        team_members = list(teams[selected_team]["Team Members"].keys())
+        selected_member = st.selectbox("Select a Team Member:", team_members)
         
-        # Team Members
-        st.markdown("**Team Members:**")
-        for member in teams[selected_team]["Team Members"]:
-            st.markdown(f"- {member}")
+        # Display member details
+        if selected_member:
+            member_data = teams[selected_team]["Team Members"][selected_member]
             
-        # Key Collaborations
-        st.markdown("\n**Key Collaborations:**")
-        for collab in teams[selected_team]["Key Collaborations"]:
-            st.markdown(f"- {collab}")
-        
+            st.markdown(f"### {selected_member}")
+            st.markdown(f"**Role:** {member_data['Role']}")
+            st.markdown(f"**Responsibilities:** {member_data['Responsibilities']}")
+            
+            st.markdown("**Key Projects:**")
+            for project in member_data['Key Projects']:
+                st.markdown(f"- {project}")
+            
+            st.markdown("\n**Team Collaborations:**")
+            for collab in teams[selected_team]["Key Collaborations"]:
+                st.markdown(f"- {collab}")
+
         # Add interaction hint
         st.markdown("---")
         st.markdown("""
-        **Tip:** Click on different teams to see their members and collaborations.
-        This view helps understand how teams work together across the organization.
+        **Tip:** Use the dropdowns above to explore different teams and team members.
+        The visualization shows how teams connect across the organization.
         """)
 
 if __name__ == "__main__":
