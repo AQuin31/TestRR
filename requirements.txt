@@ -5,6 +5,4 @@ seaborn
 plotly
 numpy
 graphviz
-networkx
-plotly
 collections
