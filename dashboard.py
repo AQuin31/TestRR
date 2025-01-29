@@ -148,7 +148,7 @@ def create_team_data():
                 "Kathe Arnold": {
                     "Role": "Director of Curriculum",
                     "Responsibilities": "Oversees curriculum development",
-                    "Reports_To": "COO"
+                    "Reports_To": "Leadership Team"
                 },
                 "Kara Holland": {
                     "Role": "Curriculum Specialist",
@@ -230,15 +230,28 @@ def create_team_visualization(selected_team=None):
                     reports_to = member.get("Reports_To", "")
                     if reports_to == "Leadership Team" and team == "Leadership":
                         x1, y1 = other_data["Position"]
-                        color = '#1f77b4' if selected_team in [team, other_team] else '#E1E5E8'
-                        width = 2 if selected_team in [team, other_team] else 1
-                        fig.add_trace(go.Scatter(
-                            x=[x0, x1], y=[y0, y1],
-                            mode='lines',
-                            line=dict(color=color, width=width),
-                            hoverinfo='none',
-                            showlegend=False
-                        ))
+                        # Check if any team member reports to a role in this team
+                        reports_to_this_team = False
+                        for member_data in other_data["Team Members"].values():
+                            member_reports_to = member_data.get("Reports_To", "")
+                            for leader in data["Team Members"].values():
+                                leader_role = leader.get("Role", "")
+                                if member_reports_to in [leader_role, "Leadership Team", "CEO", "COO", "CFO"]:
+                                    reports_to_this_team = True
+                                    break
+                            if reports_to_this_team:
+                                break
+                        
+                        if reports_to_this_team:
+                            color = '#1f77b4' if selected_team in [team, other_team] else '#E1E5E8'
+                            width = 2 if selected_team in [team, other_team] else 1
+                            fig.add_trace(go.Scatter(
+                                x=[x0, x1], y=[y0, y1],
+                                mode='lines',
+                                line=dict(color=color, width=width),
+                                hoverinfo='none',
+                                showlegend=False
+                            ))
                     elif any(reports_to == tm.get("Role", "") for tm in data["Team Members"].values()):
                         x1, y1 = other_data["Position"]
                         color = '#1f77b4' if selected_team in [team, other_team] else '#E1E5E8'
