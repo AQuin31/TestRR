@@ -276,20 +276,20 @@ def create_team_visualization(selected_team=None):
         node_y.append(data["Position"][1])
         node_text.append(f"{team}<br>{len(data['Team Members'])} members")
         
-        # Calculate base size based on text length
-        text_length = len(team)
-        base_size = max(70, text_length * 8)  # Minimum size of 70, scales with text length
-        
+        # Set base size for all departments, with Leadership being larger
+        if team == "Leadership":
+            node_sizes.append(100)  # Larger size for Leadership
+        else:
+            node_sizes.append(70)   # Standard size for all other departments
+            
+        # Set colors based on selection
         if selected_team:
             if team == selected_team:
-                node_colors.append('#1f77b4')
-                node_sizes.append(base_size * 1.2)  # 20% larger for selected team
+                node_colors.append('#1f77b4')  # Selected team color
             else:
-                node_colors.append('#E1E5E8')
-                node_sizes.append(base_size)
+                node_colors.append('#E1E5E8')  # Non-selected team color
         else:
             node_colors.append('lightblue')
-            node_sizes.append(base_size)
 
     fig.add_trace(go.Scatter(
         x=node_x,
