@@ -369,8 +369,6 @@ def main():
         st.markdown("""
         **Understanding the Visualization:**
         - Each circle represents a department
-        - Size indicates number of team members
-        - Lines show reporting relationships
         - Click on departments to see details
         """)
 
