@@ -555,15 +555,22 @@ def create_workflow_diagram(selected_activity):
             font=dict(size=10)
         )
         
-        # Add arrow to next step
+                    # Add arrow to next step
         if i < n_steps - 1:
             fig.add_annotation(
-                x=i*spacing+40, y=0,
-                x2=(i+1)*spacing-40, y2=0,
+                x=i*spacing+40,
+                y=0,
+                xref="x",
+                yref="y",
+                axref="x",
+                ayref="y",
+                ax=(i+1)*spacing-40,
+                ay=0,
                 arrowhead=2,
                 arrowsize=1.5,
                 arrowwidth=2,
-                arrowcolor="#1f77b4"
+                arrowcolor="#1f77b4",
+                showarrow=True
             )
     
     # Update layout
