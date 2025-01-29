@@ -348,14 +348,6 @@ def main():
                 st.markdown(f"**Responsibilities:** {member_data['Responsibilities']}")
             st.markdown(f"**Reports To:** {member_data['Reports_To']}")
 
-        # Add manager note
-        st.markdown("---")
-        st.markdown("""
-        **Note:** The Leadership Team consists of BJ Dines (CEO), 
-        Leah Dines (CFO), Brian Snyder (Director of Innovation and Partnerships), 
-        LaRae Kendrick (Director of Educational Support), and 
-        Josh Leitz (Chief Operations Officer).
-        """)
         
         st.markdown("""
         If you have any concerns or need additional support, 
