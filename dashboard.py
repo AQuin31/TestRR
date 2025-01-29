@@ -8,27 +8,27 @@ def create_team_data():
                 "BJ Dines": {
                     "Role": "CEO",
                     "Responsibilities": "Overall company leadership and strategy",
-                    "Reports_To": "  "
+                    "Reports_To": "Board of Directors"
                 },
                 "Leah Dines": {
                     "Role": "CFO",
                     "Responsibilities": "Financial oversight and management",
-                   "Reports_To": "  "
+                    "Reports_To": "CEO"
                 },
                 "Brian Snyder": {
                     "Role": "Director of Innovation and Partnerships",
                     "Responsibilities": "Oversees Sales, Backbone, and Virtual Instruction",
-                    "Reports_To": "CEO & CFO"
+                    "Reports_To": "CEO"
                 },
                 "Josh Leitz": {
                     "Role": "Chief Operations Officer",
                     "Responsibilities": "Oversees operations and curriculum",
-                    "Reports_To": "CEO & CFO"
+                    "Reports_To": "CEO"
                 },
                 "LaRae Kendrick": {
                     "Role": "Director of Educational Support and Implementation",
                     "Responsibilities": "Leads educational support teams",
-                    "Reports_To": "CEO & CFO"
+                    "Reports_To": "CEO"
                 }
             },
             "Position": [0, 0]  # Center position
@@ -274,7 +274,7 @@ def create_team_visualization(selected_team=None):
     for team, data in teams.items():
         node_x.append(data["Position"][0])
         node_y.append(data["Position"][1])
-        node_text.append(f"{team}<br>{len(data['Team Members'])} members")
+        node_text.append(team)  # Just the team name, no member count
         
         # Set base size for all departments, with Leadership being larger
         if team == "Leadership":
@@ -348,6 +348,14 @@ def main():
                 st.markdown(f"**Responsibilities:** {member_data['Responsibilities']}")
             st.markdown(f"**Reports To:** {member_data['Reports_To']}")
 
+        # Add manager note
+        st.markdown("---")
+        st.markdown("""
+        **Note:** The Leadership Team consists of BJ Dines (CEO), 
+        Leah Dines (CFO), Brian Snyder (Director of Innovation and Partnerships), 
+        LaRae Kendrick (Director of Educational Support), and 
+        Josh Leitz (Chief Operations Officer).
+        """)
         
         st.markdown("""
         If you have any concerns or need additional support, 
@@ -361,6 +369,8 @@ def main():
         st.markdown("""
         **Understanding the Visualization:**
         - Each circle represents a department
+        - Size indicates number of team members
+        - Lines show reporting relationships
         - Click on departments to see details
         """)
 
