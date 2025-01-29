@@ -41,7 +41,7 @@ def create_team_data():
                     "Reports_To": "CFO"
                 }
             },
-            "Position": [0, 1]  # Top
+            "Position": [0, 2]  # Top
         },
         "Sales": {
             "Team Members": {
@@ -101,7 +101,7 @@ def create_team_data():
                     "Reports_To": "Director of Innovation and Partnerships"
                 }
             },
-            "Position": [0.866, 0.5]  # 60 degrees
+            "Position": [1.73, 1]  # 60 degrees
         },
         "Virtual Instruction": {
             "Team Members": {
@@ -116,7 +116,7 @@ def create_team_data():
                     "Reports_To": "Director of Virtual Learning"
                 }
             },
-            "Position": [0.866, -0.5]  # 120 degrees
+            "Position": [1.73, -1]  # 120 degrees
         },
         "Support": {
             "Team Members": {
@@ -141,7 +141,7 @@ def create_team_data():
                     "Reports_To": "Senior Support Specialist and Coaching Lead"
                 }
             },
-            "Position": [0, -1]  # Bottom
+            "Position": [0, -2]  # Bottom
         },
         "Curriculum": {
             "Team Members": {
@@ -166,7 +166,7 @@ def create_team_data():
                     "Reports_To": "Director of Curriculum"
                 }
             },
-            "Position": [-0.866, -0.5]  # 240 degrees
+            "Position": [-1.73, -1]  # 240 degrees
         },
         "Development": {
             "Team Members": {
@@ -196,7 +196,7 @@ def create_team_data():
                     "Reports_To": "Project Manager"
                 }
             },
-            "Position": [-0.866, 0.5]  # 300 degrees
+            "Position": [-1.73, 1]  # 300 degrees
         },
         "Training": {
             "Team Members": {
@@ -211,7 +211,7 @@ def create_team_data():
                     "Reports_To": "Leadership Team"
                 }
             },
-            "Position": [0, 0.5]  # Right
+            "Position": [0, 1]  # Between Finance and Sales
         }
     }
 
@@ -309,16 +309,16 @@ def create_team_visualization(selected_team=None):
             showgrid=False, 
             zeroline=False, 
             showticklabels=False,
-            range=[-1.5, 1.5]  # Increased range for more space
+            range=[-2.5, 2.5]  # Increased range for more space
         ),
         yaxis=dict(
             showgrid=False, 
             zeroline=False, 
             showticklabels=False,
-            range=[-1.5, 1.5]  # Increased range for more space
+            range=[-2.5, 2.5]  # Increased range for more space
         ),
         plot_bgcolor='white',
-        height=700  # Increased height
+        height=800  # Increased height
     )
     
     return fig
