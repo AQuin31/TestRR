@@ -1,5 +1,4 @@
 import streamlit as st
-import networkx as nx
 import plotly.graph_objects as go
 from collections import defaultdict
 
@@ -11,7 +10,8 @@ def create_team_data():
         "Leadership": {
             "Team Members": ["BJ Dines (CEO)", "Leah Dines (CFO)", "Josh Leitz (COO)", 
                            "Brian Snyder (Dir. Innovation & Partnerships)"],
-            "Key Collaborations": ["All Teams", "Finance", "Operations", "Sales & Partnerships"]
+            "Key Collaborations": ["Educational Support", "Product", "Curriculum", "Virtual Learning"],
+            "Position": [0, 0]  # Central position
         },
         "Educational Support": {
             "Team Members": ["LaRae Kendrick (Dir. Educational Support)", 
@@ -20,98 +20,87 @@ def create_team_data():
                            "Kevin McCormick (Support & Education Lead)",
                            "Leslie King (Professional Trainer)",
                            "Heather Caldwell (Professional Trainer)"],
-            "Key Collaborations": ["Product Team", "Curriculum", "Virtual Learning"]
+            "Key Collaborations": ["Leadership", "Product", "Curriculum"],
+            "Position": [-1, 1]  # Top left
         },
-        "Product Team": {
+        "Product": {
             "Team Members": ["Angeline Quinones (Project Manager)",
                            "Richard Metze (Software Dev)",
                            "Mayowa Akinyemi (Software Dev)",
                            "Joanne Delphia (Sr. Product Designer)",
                            "Seth Morris (LMS Admin)"],
-            "Key Collaborations": ["Educational Support", "Curriculum", "Virtual Learning"]
+            "Key Collaborations": ["Leadership", "Educational Support", "Curriculum"],
+            "Position": [1, 1]  # Top right
         },
         "Curriculum": {
             "Team Members": ["Kathe Arnold (Dir. Curriculum)"],
-            "Key Collaborations": ["Educational Support", "Virtual Learning", "Product Team"]
+            "Key Collaborations": ["Leadership", "Educational Support", "Product", "Virtual Learning"],
+            "Position": [-1, -1]  # Bottom left
         },
         "Virtual Learning": {
             "Team Members": ["Jeremy Gold (Dir. Virtual Learning)"],
-            "Key Collaborations": ["Educational Support", "Curriculum", "Product Team"]
+            "Key Collaborations": ["Leadership", "Curriculum", "Educational Support"],
+            "Position": [1, -1]  # Bottom right
         }
     }
 
-def create_responsibilities_data():
-    return {
-        "BJ Dines (CEO)": {
-            "Responsibilities": "Overall company strategy and leadership",
-            "Team": "Leadership",
-            "Key Projects": ["Strategic Planning", "Company Growth", "Partnership Development"],
-            "Common Collaborations": ["Executive Team", "Board of Directors", "All Department Heads"]
-        },
-        "Leah Dines (CFO)": {
-            "Responsibilities": "Financial oversight, budgeting, and accounting",
-            "Team": "Leadership",
-            "Key Projects": ["Budget Planning", "Financial Reporting", "Resource Allocation"],
-            "Common Collaborations": ["CEO", "Department Heads", "External Auditors"]
-        },
-        # Add all other roles similarly...
-    }
-
-def create_team_network():
+def create_team_visualization():
     teams = create_team_data()
-    G = nx.Graph()
     
-    # Add nodes for each team
-    for team in teams:
-        G.add_node(team)
-    
-    # Add edges based on collaborations
+    # Create nodes (teams)
+    node_x = []
+    node_y = []
+    node_text = []
     for team, data in teams.items():
+        node_x.append(data["Position"][0])
+        node_y.append(data["Position"][1])
+        node_text.append(team)
+    
+    # Create edges (collaborations)
+    edge_x = []
+    edge_y = []
+    for team, data in teams.items():
+        x0, y0 = data["Position"]
         for collab in data["Key Collaborations"]:
             if collab in teams:
-                G.add_edge(team, collab)
-    
-    # Calculate layout
-    pos = nx.spring_layout(G)
+                x1, y1 = teams[collab]["Position"]
+                edge_x.extend([x0, x1, None])
+                edge_y.extend([y0, y1, None])
     
     # Create the visualization
-    edge_trace = go.Scatter(
-        x=[], y=[],
-        line=dict(width=2, color='#888'),
+    fig = go.Figure()
+    
+    # Add edges
+    fig.add_trace(go.Scatter(
+        x=edge_x, y=edge_y,
+        line=dict(width=1, color='#888'),
         hoverinfo='none',
-        mode='lines')
-
-    for edge in G.edges():
-        x0, y0 = pos[edge[0]]
-        x1, y1 = pos[edge[1]]
-        edge_trace['x'] += (x0, x1, None)
-        edge_trace['y'] += (y0, y1, None)
-
-    node_trace = go.Scatter(
-        x=[], y=[],
-        text=[],
+        mode='lines'
+    ))
+    
+    # Add nodes
+    fig.add_trace(go.Scatter(
+        x=node_x, y=node_y,
+        text=node_text,
         mode='markers+text',
-        textposition="top center",
         hoverinfo='text',
         marker=dict(
-            showscale=False,
-            size=30,
-            line_width=2))
-
-    for node in G.nodes():
-        x, y = pos[node]
-        node_trace['x'] += tuple([x])
-        node_trace['y'] += tuple([y])
-        node_trace['text'] += tuple([node])
-
-    fig = go.Figure(data=[edge_trace, node_trace],
-                   layout=go.Layout(
-                       showlegend=False,
-                       hovermode='closest',
-                       margin=dict(b=20,l=5,r=5,t=40),
-                       xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                       yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
-                   )
+            size=40,
+            line_width=2,
+            color='lightblue'
+        ),
+        textposition="middle center"
+    ))
+    
+    # Update layout
+    fig.update_layout(
+        showlegend=False,
+        hovermode='closest',
+        margin=dict(b=20,l=5,r=5,t=40),
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        plot_bgcolor='white'
+    )
     
     return fig
 
@@ -121,20 +110,20 @@ def main():
     col1, col2 = st.columns([3, 2])
     
     with col1:
-        st.plotly_chart(create_team_network(), use_container_width=True)
+        st.plotly_chart(create_team_visualization(), use_container_width=True)
         
         st.markdown("""
         **Understanding Team Connections:**
-        - Nodes represent different teams within SchoolsPLP
-        - Lines show primary collaboration paths
-        - Closer nodes indicate more frequent collaboration
+        - Each circle represents a team within SchoolsPLP
+        - Lines show primary collaboration paths between teams
+        - This view complements the org chart by showing cross-functional relationships
         """)
     
     with col2:
         teams = create_team_data()
         selected_team = st.selectbox("Select a Team:", list(teams.keys()))
         
-        st.markdown(f"### {selected_team} Team")
+        st.markdown(f"### {selected_team}")
         
         # Team Members
         st.markdown("**Team Members:**")
@@ -145,12 +134,12 @@ def main():
         st.markdown("\n**Key Collaborations:**")
         for collab in teams[selected_team]["Key Collaborations"]:
             st.markdown(f"- {collab}")
-            
-        # Additional context box
+        
+        # Add interaction hint
         st.markdown("---")
         st.markdown("""
-        **Note:** This view complements the existing org chart by showing how 
-        teams typically collaborate and work together across the organization.
+        **Tip:** Click on different teams to see their members and collaborations.
+        This view helps understand how teams work together across the organization.
         """)
 
 if __name__ == "__main__":
