@@ -495,25 +495,99 @@ def get_raci_description(role):
     return descriptions.get(role, "")
 
 def create_workflow_diagram(selected_activity):
-    """Create a Mermaid diagram showing the workflow for the selected activity"""
+    """Create a Plotly-based workflow diagram"""
     workflows = {
-        "Platform Feature Changes": """graph TD
-    A[Feature Request] --> B[Development Team Assessment]
-    B --> C[Leadership Review]
-    C --> D[Development Implementation]
-    D --> E[Support Team Testing]
-    E --> F[Final Approval]
-    F --> G[Deployment]
-    G --> H[User Communication]""",
-        "Content Updates": """graph TD
-    A[Content Update Need] --> B[Curriculum Team Review]
-    B --> C[Development of Updates]
-    C --> D[Quality Check]
-    D --> E[Leadership Approval]
-    E --> F[Implementation]
-    F --> G[Documentation Update]"""
+        "Platform Feature Changes": {
+            "steps": [
+                "Feature Request",
+                "Development Team Assessment",
+                "Leadership Review",
+                "Development Implementation",
+                "Support Team Testing",
+                "Final Approval",
+                "Deployment",
+                "User Communication"
+            ]
+        },
+        "Content Updates": {
+            "steps": [
+                "Content Update Need",
+                "Curriculum Team Review",
+                "Development of Updates",
+                "Quality Check",
+                "Leadership Approval",
+                "Implementation",
+                "Documentation Update"
+            ]
+        }
     }
-    return workflows.get(selected_activity, "")
+    
+    if selected_activity not in workflows:
+        return None
+        
+    steps = workflows[selected_activity]["steps"]
+    n_steps = len(steps)
+    
+    # Create figure
+    fig = go.Figure()
+    
+    # Calculate positions
+    y_pos = 0
+    spacing = 100
+    
+    # Add nodes and connections
+    for i, step in enumerate(steps):
+        # Add node
+        fig.add_shape(
+            type="circle",
+            xref="x", yref="y",
+            x0=i*spacing-20, y0=-20,
+            x1=i*spacing+20, y1=20,
+            line_color="#1f77b4",
+            fillcolor="white"
+        )
+        
+        # Add text
+        fig.add_annotation(
+            x=i*spacing, y=0,
+            text=step,
+            showarrow=False,
+            font=dict(size=10)
+        )
+        
+        # Add arrow to next step
+        if i < n_steps - 1:
+            fig.add_annotation(
+                x=i*spacing+40, y=0,
+                x2=(i+1)*spacing-40, y2=0,
+                arrowhead=2,
+                arrowsize=1.5,
+                arrowwidth=2,
+                arrowcolor="#1f77b4"
+            )
+    
+    # Update layout
+    fig.update_layout(
+        showlegend=False,
+        plot_bgcolor='white',
+        width=n_steps * spacing + 100,
+        height=200,
+        xaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showticklabels=False,
+            range=[-50, n_steps * spacing + 50]
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showticklabels=False,
+            range=[-50, 50]
+        ),
+        margin=dict(l=20, r=20, t=20, b=20)
+    )
+    
+    return fig
 
 def main():
     st.markdown('<h1 style="margin-top: 0.5rem;">SchoolsPLP Organizational Structure</h1>', unsafe_allow_html=True)
@@ -591,11 +665,18 @@ def main():
             ["Platform Feature Changes", "Content Updates"]
         )
         
-        workflow = create_workflow_diagram(workflow_activity)
-        if workflow:
-            st.mermaid(workflow)
+        workflow_fig = create_workflow_diagram(workflow_activity)
+        if workflow_fig:
+            st.plotly_chart(workflow_fig, use_container_width=True)
         else:
             st.info("Workflow diagram not available for this activity yet.")
+            
+        st.markdown("""
+        **Understanding Workflows:**
+        - Each circle represents a step in the process
+        - Arrows show the progression between steps
+        - Click and drag to pan, scroll to zoom
+        """)
 
 if __name__ == "__main__":
     main()
