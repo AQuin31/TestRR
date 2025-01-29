@@ -13,12 +13,12 @@ def create_team_data():
                 "Leah Dines": {
                     "Role": "CFO",
                     "Responsibilities": "Financial oversight and management",
-                    "Reports_To": "CEO"
+                    "Reports_To": " "
                 },
                 "Brian Snyder": {
                     "Role": "Director of Innovation and Partnerships",
                     "Responsibilities": "Oversees SchoolsPLP Sales, Backbone, and EDS teams",
-                    "Reports_To": "CEO"
+                    "Reports_To": " "
                 },
                 "Josh Leitz": {
                     "Role": "Chief Operations Officer",
