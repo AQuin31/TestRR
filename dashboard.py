@@ -1,5 +1,6 @@
 import streamlit as st
 import plotly.graph_objects as go
+import pandas as pd
 
 def create_team_data():
     return {
@@ -101,7 +102,7 @@ def create_team_data():
                     "Reports_To": "Director of Innovation and Partnerships"
                 }
             },
-            "Position": [0, 1.3]  # Moved Sales higher (was [0, 1])
+            "Position": [0, 1.3]  # Top
         },
         "Virtual Instruction": {
             "Team Members": {
@@ -211,7 +212,145 @@ def create_team_data():
                     "Reports_To": "Leadership Team"
                 }
             },
-            "Position": [0, 2]  # Top
+            "Position": [0, 2.3]  # Higher top position
+        }
+    }
+
+def create_raci_data():
+    """Create RACI matrix data structure"""
+    return {
+        "Platform Feature Changes": {
+            "Leadership": {
+                "BJ Dines": "A",
+                "Josh Leitz": "A",
+                "Brian Snyder": "C"
+            },
+            "Development": {
+                "Angeline Quinones": "R",
+                "Richard Metze": "R",
+                "Mayowa Akinyemi": "R",
+                "Seth Morris": "C"
+            },
+            "Support": {
+                "Gordon Gower": "C",
+                "Kim Schnepper": "I"
+            },
+            "Curriculum": {
+                "Kathe Arnold": "C"
+            }
+        },
+        "Content Updates": {
+            "Leadership": {
+                "Josh Leitz": "A"
+            },
+            "Curriculum": {
+                "Kathe Arnold": "R",
+                "Kara Holland": "R",
+                "Brandon Hellman": "R",
+                "Aiyana Pomato": "R"
+            },
+            "Development": {
+                "Seth Morris": "I"
+            },
+            "Support": {
+                "Gordon Gower": "C"
+            }
+        },
+        "Bug Fixes": {
+            "Development": {
+                "Angeline Quinones": "A",
+                "Richard Metze": "R",
+                "Mayowa Akinyemi": "R"
+            },
+            "Support": {
+                "Gordon Gower": "C",
+                "Kim Schnepper": "R"
+            }
+        },
+        "User Access Management": {
+            "Leadership": {
+                "Josh Leitz": "A"
+            },
+            "Development": {
+                "Seth Morris": "R",
+                "Angeline Quinones": "C"
+            },
+            "Support": {
+                "Kim Schnepper": "R",
+                "Gordon Gower": "C"
+            }
+        },
+        "Third-party Integrations": {
+            "Leadership": {
+                "Brian Snyder": "A",
+                "Josh Leitz": "C"
+            },
+            "Development": {
+                "Angeline Quinones": "R",
+                "Seth Morris": "R"
+            },
+            "Support": {
+                "Kim Schnepper": "C"
+            }
+        },
+        "Training Material Updates": {
+            "Training": {
+                "Leslie King": "R",
+                "Heather Caldwell": "R"
+            },
+            "Curriculum": {
+                "Kathe Arnold": "A"
+            },
+            "Support": {
+                "Gordon Gower": "C"
+            }
+        },
+        "Customer Support Escalations": {
+            "Support": {
+                "Gordon Gower": "R",
+                "Kim Schnepper": "R"
+            },
+            "Leadership": {
+                "LaRae Kendrick": "A",
+                "Brian Snyder": "C"
+            },
+            "Development": {
+                "Angeline Quinones": "C"
+            }
+        },
+        "Performance Monitoring": {
+            "Development": {
+                "Seth Morris": "R",
+                "Angeline Quinones": "A"
+            },
+            "Support": {
+                "Gordon Gower": "C"
+            },
+            "Leadership": {
+                "Josh Leitz": "I"
+            }
+        },
+        "Security Updates": {
+            "Development": {
+                "Angeline Quinones": "A",
+                "Seth Morris": "R"
+            },
+            "Leadership": {
+                "Josh Leitz": "I",
+                "BJ Dines": "I"
+            }
+        },
+        "Data Management": {
+            "Development": {
+                "Seth Morris": "R",
+                "Angeline Quinones": "A"
+            },
+            "Support": {
+                "Kim Schnepper": "C"
+            },
+            "Leadership": {
+                "Josh Leitz": "I"
+            }
         }
     }
 
@@ -269,7 +408,7 @@ def create_team_visualization(selected_team=None):
     for team, data in teams.items():
         node_x.append(data["Position"][0])
         node_y.append(data["Position"][1])
-        node_text.append(team)
+        node_text.append(f"{team}\n({len(data['Team Members'])} members)")
         
         # Set fixed sizes and ROYGBIV colors
         if team == "Leadership":
@@ -310,7 +449,7 @@ def create_team_visualization(selected_team=None):
             showgrid=False, 
             zeroline=False, 
             showticklabels=False,
-            range=[-2.5, 2.5]
+            range=[-2.5, 3.0]
         ),
         yaxis=dict(
             showgrid=False, 
@@ -324,33 +463,144 @@ def create_team_visualization(selected_team=None):
     
     return fig
 
+def create_raci_table(selected_activity, raci_data):
+    """Create a formatted RACI table for Streamlit"""
+    if selected_activity not in raci_data:
+        return pd.DataFrame()
+    
+    # Initialize empty lists for the table data
+    rows = []
+    
+    # Process the data for the selected activity
+    activity_data = raci_data[selected_activity]
+    for department, members in activity_data.items():
+        for person, role in members.items():
+            rows.append({
+                "Department": department,
+                "Team Member": person,
+                "Role": role,
+                "Description": get_raci_description(role)
+            })
+    
+    return pd.DataFrame(rows)
+
+def get_raci_description(role):
+    """Return description for RACI role"""
+    descriptions = {
+        "R": "Responsible (Does the work)",
+        "A": "Accountable (Approves)",
+        "C": "Consulted (Provides input)",
+        "I": "Informed (Kept updated)"
+    }
+    return descriptions.get(role, "")
+
+def create_workflow_diagram(selected_activity):
+    """Create a Mermaid diagram showing the workflow for the selected activity"""
+    workflows = {
+        "Platform Feature Changes": """
+        graph TD
+            A[Feature Request] --> B[Development Team Assessment]
+            B --> C[Leadership Review]
+            C --> D[Development Implementation]
+            D --> E[Support Team Testing]
+            E --> F[Final Approval]
+            F --> G[Deployment]
+            G --> H[User Communication]
+        """,
+        "Content Updates": """
+        graph TD
+            A[Content Update Need] --> B[Curriculum Team Review]
+            B --> C[Development of Updates]
+            C --> D[Quality Check]
+            D --> E[Leadership Approval]
+            E --> F[Implementation]
+            F --> G[Documentation Update]
+        """
+        # Add more workflows as needed
+    }
+    return workflows.get(selected_activity, "")
+
 def main():
     st.markdown('<h1 style="margin-top: 0.5rem;">SchoolsPLP Organizational Structure</h1>', unsafe_allow_html=True)
     
     teams = create_team_data()
+    raci_data = create_raci_data()
     
-    col1, col2 = st.columns([3, 2])
+    # Create tabs
+    tab1, tab2, tab3 = st.tabs(["Org Structure", "RACI Matrix", "Activity Workflows"])
     
-    with col2:
-        # First dropdown for team selection
-        selected_team = st.selectbox("Select a Department:", list(teams.keys()))
+    with tab1:
+        col1, col2 = st.columns([3, 2])
         
-        # Second dropdown for team member selection
-        team_members = list(teams[selected_team]["Team Members"].keys())
-        selected_member = st.selectbox("Select a Team Member:", team_members)
-        
-        # Display member details
-        if selected_member:
-            member_data = teams[selected_team]["Team Members"][selected_member]
+        with col2:
+            selected_team = st.selectbox("Select a Department:", list(teams.keys()))
+            team_members = list(teams[selected_team]["Team Members"].keys())
+            selected_member = st.selectbox("Select a Team Member:", team_members)
             
-            st.markdown(f"### {selected_member}")
-            st.markdown(f"**Role:** {member_data['Role']}")
-            if "Responsibilities" in member_data:
-                st.markdown(f"**Responsibilities:** {member_data['Responsibilities']}")
-            st.markdown(f"**Reports To:** {member_data['Reports_To']}")
+            if selected_member:
+                member_data = teams[selected_team]["Team Members"][selected_member]
+                st.markdown(f"### {selected_member}")
+                st.markdown(f"**Role:** {member_data['Role']}")
+                if "Responsibilities" in member_data:
+                    st.markdown(f"**Responsibilities:** {member_data['Responsibilities']}")
+                st.markdown(f"**Reports To:** {member_data['Reports_To']}")
+        
+        with col1:
+            st.plotly_chart(create_team_visualization(selected_team), use_container_width=True)
     
-    with col1:
-        st.plotly_chart(create_team_visualization(selected_team), use_container_width=True)
+    with tab2:
+        st.markdown("### Responsibility Assignment Matrix")
+        st.markdown("""
+        This matrix shows who is Responsible, Accountable, Consulted, or Informed for different activities:
+        - **R** (Responsible): Person who performs the work
+        - **A** (Accountable): Person who makes final decisions and has ultimate ownership
+        - **C** (Consulted): Person who needs to provide input before decisions
+        - **I** (Informed): Person who needs to be kept updated on progress
+        """)
+        
+        # Activity selector
+        selected_activity = st.selectbox(
+            "Select Activity:",
+            list(raci_data.keys())
+        )
+        
+        # Display RACI table
+        raci_table = create_raci_table(selected_activity, raci_data)
+        if not raci_table.empty:
+            st.dataframe(
+                raci_table,
+                column_config={
+                    "Department": st.column_config.TextColumn("Department"),
+                    "Team Member": st.column_config.TextColumn("Team Member"),
+                    "Role": st.column_config.TextColumn("RACI Role"),
+                    "Description": st.column_config.TextColumn("Role Description")
+                },
+                hide_index=True
+            )
+            
+            # Add filters
+            st.markdown("### Filter View")
+            selected_dept = st.multiselect(
+                "Filter by Department",
+                options=raci_table["Department"].unique()
+            )
+            
+            if selected_dept:
+                filtered_table = raci_table[raci_table["Department"].isin(selected_dept)]
+                st.dataframe(filtered_table, hide_index=True)
+    
+    with tab3:
+        st.markdown("### Activity Workflows")
+        workflow_activity = st.selectbox(
+            "Select Activity to View Workflow:",
+            ["Platform Feature Changes", "Content Updates"]
+        )
+        
+        workflow = create_workflow_diagram(workflow_activity)
+        if workflow:
+            st.mermaid(workflow)
+        else:
+            st.info("Workflow diagram not available for this activity yet.")
 
 if __name__ == "__main__":
     main()
