@@ -41,7 +41,7 @@ def create_team_data():
                     "Reports_To": "CFO"
                 }
             },
-            "Position": [1.73, 1]  # Moving Finance to where Sales was
+            "Position": [1.73, 1]  # Top right
         },
         "Sales": {
             "Team Members": {
@@ -101,7 +101,7 @@ def create_team_data():
                     "Reports_To": "Director of Innovation and Partnerships"
                 }
             },
-            "Position": [1.73, 1]  # 60 degrees
+            "Position": [0, 1]  # Top middle
         },
         "Virtual Instruction": {
             "Team Members": {
@@ -116,7 +116,7 @@ def create_team_data():
                     "Reports_To": "Director of Virtual Learning"
                 }
             },
-            "Position": [1.73, -1]  # 120 degrees
+            "Position": [1.73, -1]  # Right lower
         },
         "Support": {
             "Team Members": {
@@ -166,7 +166,7 @@ def create_team_data():
                     "Reports_To": "Director of Curriculum"
                 }
             },
-            "Position": [-1.73, -1]  # 240 degrees
+            "Position": [-1.73, -1]  # Left lower
         },
         "Development": {
             "Team Members": {
@@ -196,7 +196,7 @@ def create_team_data():
                     "Reports_To": "Project Manager"
                 }
             },
-            "Position": [-1.73, 1]  # 300 degrees
+            "Position": [-1.73, 1]  # Left upper
         },
         "Training": {
             "Team Members": {
@@ -211,7 +211,7 @@ def create_team_data():
                     "Reports_To": "Leadership Team"
                 }
             },
-            "Position": [0, 1]  # Between Finance and Sales
+            "Position": [0, 2]  # Top
         }
     }
 
@@ -273,9 +273,9 @@ def create_team_visualization(selected_team=None):
         
         # Set fixed sizes and ROYGBIV colors
         if team == "Leadership":
-            node_sizes.append(180)  # Increased size for Leadership (was 150)
+            node_sizes.append(180)  # Larger size for Leadership
         else:
-            node_sizes.append(120)  # Increased standard size for all other departments (was 100)
+            node_sizes.append(120)  # Standard size for all other departments
         
         # Apply colors from color map
         node_colors.append(color_map[team])
@@ -289,12 +289,12 @@ def create_team_visualization(selected_team=None):
             color=node_colors,
             size=node_sizes,
             line=dict(color='white', width=2),
-            opacity=1.0  # Set full opacity
+            opacity=1.0
         ),
         textposition="middle center",
         textfont=dict(
-            color='black',  # Text color for department names
-            size=14,       # Font size
+            color='black',
+            size=14,
             family="Arial, sans-serif"
         ),
         hovertext=node_text,
@@ -310,16 +310,16 @@ def create_team_visualization(selected_team=None):
             showgrid=False, 
             zeroline=False, 
             showticklabels=False,
-            range=[-2.5, 2.5]  # Increased range for more space
+            range=[-2.5, 2.5]
         ),
         yaxis=dict(
             showgrid=False, 
             zeroline=False, 
             showticklabels=False,
-            range=[-2.5, 2.5]  # Increased range for more space
+            range=[-2.5, 2.5]
         ),
         plot_bgcolor='white',
-        height=800  # Increased height
+        height=800
     )
     
     return fig
