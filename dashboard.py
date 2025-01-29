@@ -263,16 +263,20 @@ def create_team_visualization(selected_team=None):
         node_y.append(data["Position"][1])
         node_text.append(f"{team}<br>{len(data['Team Members'])} members")
         
+        # Calculate base size based on text length
+        text_length = len(team)
+        base_size = max(70, text_length * 8)  # Minimum size of 70, scales with text length
+        
         if selected_team:
             if team == selected_team:
                 node_colors.append('#1f77b4')
-                node_sizes.append(50)
+                node_sizes.append(base_size * 1.2)  # 20% larger for selected team
             else:
                 node_colors.append('#E1E5E8')
-                node_sizes.append(35)
+                node_sizes.append(base_size)
         else:
             node_colors.append('lightblue')
-            node_sizes.append(40)
+            node_sizes.append(base_size)
 
     fig.add_trace(go.Scatter(
         x=node_x,
@@ -287,7 +291,7 @@ def create_team_visualization(selected_team=None):
         textposition="middle center",
         textfont=dict(
             color='white',  # Text color for department names
-            size=12,       # Font size
+            size=14,       # Increased font size
             family="Arial, sans-serif"  # Font family
         ),
         hoverinfo='text',
