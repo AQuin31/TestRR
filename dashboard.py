@@ -276,18 +276,18 @@ def create_team_visualization(selected_team=None):
         node_y.append(data["Position"][1])
         node_text.append(team)  # Just the team name, no member count
         
-        # Set base size for all departments, with Leadership being larger
+        # Set fixed sizes - larger base size to accommodate longer text
         if team == "Leadership":
-            node_sizes.append(100)  # Larger size for Leadership
+            node_sizes.append(120)  # Larger size for Leadership
         else:
-            node_sizes.append(70)   # Standard size for all other departments
-            
+            node_sizes.append(85)   # Increased standard size for all other departments to fit text
+
         # Set colors based on selection
         if selected_team:
             if team == selected_team:
-                node_colors.append('#1f77b4')  # Selected team color
+                node_colors.append('#1f77b4')
             else:
-                node_colors.append('#E1E5E8')  # Non-selected team color
+                node_colors.append('#E1E5E8')
         else:
             node_colors.append('lightblue')
 
@@ -303,9 +303,9 @@ def create_team_visualization(selected_team=None):
         ),
         textposition="middle center",
         textfont=dict(
-            color='white',  # Text color for department names
-            size=14,       # Increased font size
-            family="Arial, sans-serif"  # Font family
+            color='white',
+            size=13,       # Slightly smaller font size to ensure text fits
+            family="Arial, sans-serif"
         ),
         hoverinfo='text',
         showlegend=False
