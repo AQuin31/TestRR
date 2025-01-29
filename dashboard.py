@@ -149,6 +149,7 @@ def create_team_data():
                     "Key Projects": ["LMS Administration", "System Maintenance", "User Support"]
     }
             }
+         }
 
 def create_team_visualization(selected_team=None):
     teams = create_team_data()
