@@ -497,26 +497,21 @@ def get_raci_description(role):
 def create_workflow_diagram(selected_activity):
     """Create a Mermaid diagram showing the workflow for the selected activity"""
     workflows = {
-        "Platform Feature Changes": """
-        graph TD
-            A[Feature Request] --> B[Development Team Assessment]
-            B --> C[Leadership Review]
-            C --> D[Development Implementation]
-            D --> E[Support Team Testing]
-            E --> F[Final Approval]
-            F --> G[Deployment]
-            G --> H[User Communication]
-        """,
-        "Content Updates": """
-        graph TD
-            A[Content Update Need] --> B[Curriculum Team Review]
-            B --> C[Development of Updates]
-            C --> D[Quality Check]
-            D --> E[Leadership Approval]
-            E --> F[Implementation]
-            F --> G[Documentation Update]
-        """
-        # Add more workflows as needed
+        "Platform Feature Changes": """graph TD
+    A[Feature Request] --> B[Development Team Assessment]
+    B --> C[Leadership Review]
+    C --> D[Development Implementation]
+    D --> E[Support Team Testing]
+    E --> F[Final Approval]
+    F --> G[Deployment]
+    G --> H[User Communication]""",
+        "Content Updates": """graph TD
+    A[Content Update Need] --> B[Curriculum Team Review]
+    B --> C[Development of Updates]
+    C --> D[Quality Check]
+    D --> E[Leadership Approval]
+    E --> F[Implementation]
+    F --> G[Documentation Update]"""
     }
     return workflows.get(selected_activity, "")
 
