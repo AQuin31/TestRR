@@ -8,12 +8,12 @@ def create_team_data():
                 "BJ Dines": {
                     "Role": "CEO",
                     "Responsibilities": "Overall company leadership and strategy",
-                    
+                    "Reports_To": "  "
                 },
                 "Leah Dines": {
                     "Role": "CFO",
                     "Responsibilities": "Financial oversight and management",
-                  
+                   "Reports_To": "  "
                 },
                 "Brian Snyder": {
                     "Role": "Director of Innovation and Partnerships",
