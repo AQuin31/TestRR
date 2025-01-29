@@ -43,7 +43,7 @@ def create_team_data():
             },
             "Position": [1, 0.5]
         },
-        "Innovation": {
+        "Virtual Learning": {
             "Team Members": {
                 "Jeremy Gold": {
                     "Role": "Director of Virtual Learning",
