@@ -1,184 +1,224 @@
 import streamlit as st
 import plotly.graph_objects as go
 
-# Set page configuration
-st.set_page_config(page_title="SchoolsPLP Team Connections", layout="wide")
-
 def create_team_data():
     return {
         "Leadership": {
             "Team Members": {
-                "BJ Dines (CEO)": {
-                    "Role": "Chief Executive Officer",
-                    "Responsibilities": "Overall company strategy and leadership",
-                    "Key Projects": ["Strategic Planning", "Company Growth", "Partnership Development"]
+                "BJ Dines": {
+                    "Role": "CEO",
+                    "Responsibilities": "Overall company leadership and strategy",
+                    "Reports_To": "Board of Directors"
                 },
-                "Leah Dines (CFO)": {
-                    "Role": "Chief Financial Officer",
-                    "Responsibilities": "Financial oversight, budgeting, and accounting",
-                    "Key Projects": ["Budget Planning", "Financial Analysis", "Resource Allocation"]
+                "Leah Dines": {
+                    "Role": "CFO",
+                    "Responsibilities": "Financial oversight and management",
+                    "Reports_To": "CEO"
                 },
-                "Josh Leitz (COO)": {
-                    "Role": "Chief Operating Officer",
-                    "Responsibilities": "Manages operations, supports teams, and oversees curriculum",
-                    "Key Projects": ["Operations Management", "Team Coordination", "Process Improvement"]
-                },
-                "Brian Snyder (Dir. Innovation & Partnerships)": {
-                    "Role": "Director of Innovation & Partnerships",
+                "Brian Snyder": {
+                    "Role": "Director of Innovation and Partnerships",
                     "Responsibilities": "Oversees SchoolsPLP Sales, Backbone, and EDS teams",
-                    "Key Projects": ["Partnership Development", "Innovation Initiatives", "Sales Strategy"]
+                    "Reports_To": "CEO"
+                },
+                "Josh Leitz": {
+                    "Role": "Chief Operations Officer",
+                    "Responsibilities": "Oversees operations and curriculum",
+                    "Reports_To": "CEO"
+                },
+                "LaRae Kendrick": {
+                    "Role": "Director of Educational Support and Implementation",
+                    "Responsibilities": "Leads educational support and implementation teams",
+                    "Reports_To": "CEO"
                 }
-          },
-            "Key Collaborations": ["Educational Support", "Product", "Curriculum", "Virtual Learning"],
-            "Position": [0, 0]
+            },
+            "Position": [0, 1]
+        },
+        "Finance": {
+            "Team Members": {
+                "Melanie Gonzalez": {
+                    "Role": "Accounting Associate",
+                    "Responsibilities": "Accounting and financial support",
+                    "Reports_To": "CFO"
+                }
+            },
+            "Position": [1, 0.5]
+        },
+        "Innovation": {
+            "Team Members": {
+                "Jeremy Gold": {
+                    "Role": "Director of Virtual Learning",
+                    "Responsibilities": "Manages virtual learning programs",
+                    "Reports_To": "Director of Innovation and Partnerships"
+                },
+                "Kiff Kanady": {
+                    "Role": "Academic Success Coordinator",
+                    "Responsibilities": "Coordinates academic success initiatives",
+                    "Reports_To": "Director of Virtual Learning"
+                }
+            },
+            "Position": [-1, 0]
+        },
+        "Sales": {
+            "Team Members": {
+                "Jeff Martin": {
+                    "Role": "Sales",
+                    "Responsibilities": "SchoolsPLP Sales",
+                    "Reports_To": "Director of Innovation and Partnerships"
+                },
+                "Craig Whitaker": {
+                    "Role": "Sales",
+                    "Responsibilities": "SchoolsPLP Sales",
+                    "Reports_To": "Director of Innovation and Partnerships"
+                }
+            },
+            "Position": [-1, 0.5]
         },
         "Educational Support": {
             "Team Members": {
-                "LaRae Kendrick (Dir. Educational Support)": {
-                    "Role": "Director of Educational Support",
-                    "Responsibilities": "Leads training, implementation, and support teams",
-                    "Key Projects": ["Training Program Development", "Support Strategy", "Implementation Planning"]
+                "Gordon Gower": {
+                    "Role": "Senior Support and Coaching Lead",
+                    "Responsibilities": "Leads support and coaching initiatives",
+                    "Reports_To": "Director of Educational Support"
                 },
-                "Gordon Gower (Sr. Support & Coaching Lead)": {
-                    "Role": "Senior Support & Coaching Lead",
-                    "Responsibilities": "Provides advanced educational support",
-                    "Key Projects": ["Support Team Leadership", "Coaching Program", "Quality Assurance"]
+                "Kim Schneper": {
+                    "Role": "Support Specialist and Integration Lead",
+                    "Responsibilities": "Manages support and integration",
+                    "Reports_To": "Senior Support and Coaching Lead"
                 },
-                "Kim Schneper (Support & Integration Lead)": {
-                    "Role": "Support & Integration Lead",
-                    "Responsibilities": "Manages technical and process integration",
-                    "Key Projects": ["Integration Management", "Process Development", "Technical Support"]
+                "Kevin McCormick": {
+                    "Role": "Support Specialist and Special Education Lead",
+                    "Responsibilities": "Leads special education support",
+                    "Reports_To": "Support Specialist and Integration Lead"
                 },
-                "Kevin McCormick (Support & Education Lead)": {
-                    "Role": "Support & Education Lead",
-                    "Responsibilities": "Special projects and support initiatives",
-                    "Key Projects": ["Education Programs", "Support Projects", "Team Training"]
+                "Gracie Perez": {
+                    "Role": "Support Specialist and Special Projects Lead",
+                    "Responsibilities": "Manages special projects",
+                    "Reports_To": "Support Specialist and Special Education Lead"
                 },
-                "Leslie King (Professional Trainer)": {
+                "Leslie King": {
                     "Role": "Professional Trainer",
-                    "Responsibilities": "Conducts training for schools and staff",
-                    "Key Projects": ["School Training", "Staff Development", "Training Materials"]
+                    "Responsibilities": "Conducts professional training",
+                    "Reports_To": "Director of Educational Support"
                 },
-                "Heather Caldwell (Professional Trainer)": {
+                "Heather Caldwell": {
                     "Role": "Professional Trainer",
-                    "Responsibilities": "Conducts training for schools and staff",
-                    "Key Projects": ["School Training", "Staff Development", "Training Materials"]
+                    "Responsibilities": "Conducts professional training",
+                    "Reports_To": "Director of Educational Support"
                 }
             },
-            "Key Collaborations": ["Leadership", "Product", "Curriculum"],
-            "Position": [-1, 1]
+            "Position": [0, 0]
         },
-        "Product": {
+        "Operations": {
             "Team Members": {
-                "Angeline Quinones (Project Manager)": {
-                    "Role": "Project Manager",
-                    "Responsibilities": "Leads software development and product design teams",
-                    "Key Projects": ["Product Development", "Team Management", "Release Planning"]
-                },
-                "Richard Metze (Software Dev)": {
-                    "Role": "Software Developer",
-                    "Responsibilities": "Develops and maintains company software",
-                    "Key Projects": ["Software Development", "Code Maintenance", "Feature Implementation"]
-                },
-                "Mayowa Akinyemi (Software Dev)": {
-                    "Role": "Software Developer",
-                    "Responsibilities": "Develops and maintains company software",
-                    "Key Projects": ["Software Development", "Code Maintenance", "Feature Implementation"]
-                },
-                "Joanne Delphia (Sr. Product Designer)": {
-                    "Role": "Senior Product Designer",
-                    "Responsibilities": "Leads UX/UI and product experience design",
-                    "Key Projects": ["UX Design", "UI Implementation", "User Research"]
-                },
-                "Seth Morris (LMS Admin)": {
-                    "Role": "LMS Administrator",
-                    "Responsibilities": "Manages learning management system",
-                    "Key Projects": ["LMS Administration", "System Maintenance", "User Support"]
-                }
-            },
-            "Key Collaborations": ["Leadership", "Educational Support", "Curriculum"],
-            "Position": [1, 1]
-        },
-        "Curriculum": {
-            "Team Members": {
-                "Kathe Arnold (Dir. Curriculum)": {
+                "Kathe Arnold": {
                     "Role": "Director of Curriculum",
-                    "Responsibilities": "Oversees content development and contractor collaboration",
-                    "Key Projects": ["Curriculum Development", "Content Strategy", "Quality Assessment"]
+                    "Responsibilities": "Oversees curriculum development",
+                    "Reports_To": "COO"
+                },
+                "Kara Holland": {
+                    "Role": "Curriculum Specialist",
+                    "Responsibilities": "Curriculum development and management",
+                    "Reports_To": "Director of Curriculum"
+                },
+                "Brandon Hellman": {
+                    "Role": "Science Curriculum Specialist",
+                    "Responsibilities": "Science curriculum development",
+                    "Reports_To": "Curriculum Specialist"
+                },
+                "Aiyana Pomato": {
+                    "Role": "Standards Alignments, SSELA",
+                    "Responsibilities": "Standards alignment for SSELA",
+                    "Reports_To": "Science Curriculum Specialist"
                 }
             },
-            "Key Collaborations": ["Leadership", "Educational Support", "Product", "Virtual Learning"],
-            "Position": [-1, -1]
+            "Position": [0.5, 0]
         },
-        "Virtual Learning": {
+        "Technology": {
             "Team Members": {
-                "Jeremy Gold (Dir. Virtual Learning)": {
-                    "Role": "Director of Virtual Learning",
-                    "Responsibilities": "Manages online learning coordination",
-                    "Key Projects": ["Virtual Program Management", "Online Learning Strategy", "Technology Integration"]
+                "Angeline Quinones": {
+                    "Role": "Project Manager",
+                    "Responsibilities": "Manages software development projects",
+                    "Reports_To": "COO"
+                },
+                "Richard Metze": {
+                    "Role": "Software Developer",
+                    "Responsibilities": "Software development",
+                    "Reports_To": "Project Manager"
+                },
+                "Mayowa Akinyemi": {
+                    "Role": "Software Developer",
+                    "Responsibilities": "Software development",
+                    "Reports_To": "Project Manager"
+                },
+                "Joanne Delphia": {
+                    "Role": "Senior Product Designer",
+                    "Responsibilities": "Product design and UX",
+                    "Reports_To": "Project Manager"
+                },
+                "Seth Morris": {
+                    "Role": "LMS Administrator",
+                    "Responsibilities": "Learning Management System administration",
+                    "Reports_To": "Project Manager"
+                },
+                "Micah Stetson": {
+                    "Role": "Software Developer/System Architect",
+                    "Responsibilities": "System architecture and development",
+                    "Reports_To": "Project Manager"
                 }
             },
-            "Key Collaborations": ["Leadership", "Curriculum", "Educational Support"],
-            "Position": [1, -1]
+            "Position": [1, -0.5]
         },
-         "Sales": {
+        "Backbone": {
             "Team Members": {
                 "Brian Snyder": {
-                    "Role": "Project Manager",
-                    "Responsibilities": "Leads software development and product design teams",
-                    "Key Projects": ["Product Development", "Team Management", "Release Planning"]
+                    "Role": "Team Lead",
+                    "Reports_To": "Director of Innovation and Partnerships"
                 },
-                "Richard Metze (Software Dev)": {
-                    "Role": "Software Developer",
-                    "Responsibilities": "Develops and maintains company software",
-                    "Key Projects": ["Software Development", "Code Maintenance", "Feature Implementation"]
+                "Matt West": {
+                    "Role": "Team Member",
+                    "Reports_To": "Team Lead"
                 },
-                "Mayowa Akinyemi (Software Dev)": {
-                    "Role": "Software Developer",
-                    "Responsibilities": "Develops and maintains company software",
-                    "Key Projects": ["Software Development", "Code Maintenance", "Feature Implementation"]
-                },
-                "Joanne Delphia (Sr. Product Designer)": {
-                    "Role": "Senior Product Designer",
-                    "Responsibilities": "Leads UX/UI and product experience design",
-                    "Key Projects": ["UX Design", "UI Implementation", "User Research"]
-                },
-                "Seth Morris (LMS Admin)": {
-                    "Role": "LMS Administrator",
-                    "Responsibilities": "Manages learning management system",
-                    "Key Projects": ["LMS Administration", "System Maintenance", "User Support"]
+                "Ken Behrendt": {
+                    "Role": "Team Member",
+                    "Reports_To": "Team Lead"
+                }
+            },
+            "Position": [-1, -0.5]
+        }
     }
-            }
-         }
 
 def create_team_visualization(selected_team=None):
     teams = create_team_data()
     fig = go.Figure()
 
-    # Create all connections
+    # Add connections between teams
     for team, data in teams.items():
         x0, y0 = data["Position"]
-        for collab in data["Key Collaborations"]:
-            if collab in teams:
-                x1, y1 = teams[collab]["Position"]
-                
-                # Determine if this connection should be highlighted
-                if selected_team and (team == selected_team or collab == selected_team):
-                    color = '#1f77b4'  # Blue for active connections
-                    width = 2
-                else:
-                    color = '#E1E5E8'  # Gray for inactive connections
-                    width = 1
-                
-                # Add each connection as a separate trace
-                fig.add_trace(go.Scatter(
-                    x=[x0, x1],
-                    y=[y0, y1],
-                    mode='lines',
-                    line=dict(color=color, width=width),
-                    hoverinfo='none',
-                    showlegend=False
-                ))
+        
+        # Find teams that have members reporting to leaders in this team
+        for other_team, other_data in teams.items():
+            if team != other_team:
+                for member in other_data["Team Members"].values():
+                    reports_to = member.get("Reports_To", "")
+                    if any(reports_to == tm.get("Role", "") for tm in data["Team Members"].values()):
+                        x1, y1 = other_data["Position"]
+                        
+                        # Determine if this connection should be highlighted
+                        if selected_team and (team == selected_team or other_team == selected_team):
+                            color = '#1f77b4'  # Blue for active connections
+                            width = 2
+                        else:
+                            color = '#E1E5E8'  # Gray for inactive connections
+                            width = 1
+                        
+                        fig.add_trace(go.Scatter(
+                            x=[x0, x1],
+                            y=[y0, y1],
+                            mode='lines',
+                            line=dict(color=color, width=width),
+                            hoverinfo='none',
+                            showlegend=False
+                        ))
 
     # Add team nodes
     node_x = []
@@ -190,15 +230,12 @@ def create_team_visualization(selected_team=None):
     for team, data in teams.items():
         node_x.append(data["Position"][0])
         node_y.append(data["Position"][1])
-        node_text.append(team)
+        node_text.append(f"{team}<br>{len(data['Team Members'])} members")
         
         if selected_team:
             if team == selected_team:
                 node_colors.append('#1f77b4')  # Primary blue for selected team
                 node_sizes.append(50)
-            elif team in teams[selected_team]["Key Collaborations"]:
-                node_colors.append('#7fB3ff')  # Lighter blue for collaborators
-                node_sizes.append(40)
             else:
                 node_colors.append('#E1E5E8')  # Gray for other teams
                 node_sizes.append(35)
@@ -206,7 +243,6 @@ def create_team_visualization(selected_team=None):
             node_colors.append('lightblue')
             node_sizes.append(40)
 
-    # Add nodes as a single trace
     fig.add_trace(go.Scatter(
         x=node_x,
         y=node_y,
@@ -222,7 +258,6 @@ def create_team_visualization(selected_team=None):
         showlegend=False
     ))
 
-    # Update layout
     fig.update_layout(
         showlegend=False,
         hovermode='closest',
@@ -230,14 +265,13 @@ def create_team_visualization(selected_team=None):
         xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         plot_bgcolor='white',
-        height=500,
-        width=800
+        height=600
     )
     
     return fig
 
 def main():
-    st.title("SchoolsPLP Team Connections")
+    st.title("SchoolsPLP Organizational Structure")
     
     teams = create_team_data()
     
@@ -245,7 +279,7 @@ def main():
     
     with col2:
         # First dropdown for team selection
-        selected_team = st.selectbox("Select a Team:", list(teams.keys()))
+        selected_team = st.selectbox("Select a Department:", list(teams.keys()))
         
         # Second dropdown for team member selection
         team_members = list(teams[selected_team]["Team Members"].keys())
@@ -257,31 +291,32 @@ def main():
             
             st.markdown(f"### {selected_member}")
             st.markdown(f"**Role:** {member_data['Role']}")
-            st.markdown(f"**Responsibilities:** {member_data['Responsibilities']}")
-            
-            st.markdown("**Key Projects:**")
-            for project in member_data['Key Projects']:
-                st.markdown(f"- {project}")
-            
-            st.markdown("\n**Team Collaborations:**")
-            for collab in teams[selected_team]["Key Collaborations"]:
-                st.markdown(f"- {collab}")
+            if "Responsibilities" in member_data:
+                st.markdown(f"**Responsibilities:** {member_data['Responsibilities']}")
+            st.markdown(f"**Reports To:** {member_data['Reports_To']}")
 
+        # Add manager note
         st.markdown("---")
         st.markdown("""
-        **Tip:** Use the dropdowns above to explore different teams and team members.
-        The visualization will update to show the selected team's connections.
+        **Note:** Black outlined boxes in the org chart denote Managers 
+        responsible for overseeing teams and conducting performance reviews.
+        """)
+        
+        st.markdown("""
+        If you have any concerns or need additional support, 
+        please reach out to either Brian or Josh, who will work 
+        together to provide assistance.
         """)
     
     with col1:
         st.plotly_chart(create_team_visualization(selected_team), use_container_width=True)
         
         st.markdown("""
-        **Understanding Team Connections:**
-        - Selected team is shown in dark blue
-        - Direct collaborators are shown in light blue
-        - Active collaboration paths are highlighted
-        - Other teams and connections are shown in gray
+        **Understanding the Visualization:**
+        - Each circle represents a department
+        - Size indicates number of team members
+        - Lines show reporting relationships
+        - Click on departments to see details
         """)
 
 if __name__ == "__main__":
