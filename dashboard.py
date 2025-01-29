@@ -28,7 +28,7 @@ def create_team_data():
                     "Responsibilities": "Oversees SchoolsPLP Sales, Backbone, and EDS teams",
                     "Key Projects": ["Partnership Development", "Innovation Initiatives", "Sales Strategy"]
                 }
-            },
+          },
             "Key Collaborations": ["Educational Support", "Product", "Curriculum", "Virtual Learning"],
             "Position": [0, 0]
         },
@@ -125,8 +125,34 @@ def create_team_data():
 
 def create_team_visualization(selected_team=None):
     teams = create_team_data()
-    
-    # Create nodes (teams)
+    fig = go.Figure()
+
+    # Create all connections
+    for team, data in teams.items():
+        x0, y0 = data["Position"]
+        for collab in data["Key Collaborations"]:
+            if collab in teams:
+                x1, y1 = teams[collab]["Position"]
+                
+                # Determine if this connection should be highlighted
+                if selected_team and (team == selected_team or collab == selected_team):
+                    color = '#1f77b4'  # Blue for active connections
+                    width = 2
+                else:
+                    color = '#E1E5E8'  # Gray for inactive connections
+                    width = 1
+                
+                # Add each connection as a separate trace
+                fig.add_trace(go.Scatter(
+                    x=[x0, x1],
+                    y=[y0, y1],
+                    mode='lines',
+                    line=dict(color=color, width=width),
+                    hoverinfo='none',
+                    showlegend=False
+                ))
+
+    # Add team nodes
     node_x = []
     node_y = []
     node_text = []
@@ -138,7 +164,6 @@ def create_team_visualization(selected_team=None):
         node_y.append(data["Position"][1])
         node_text.append(team)
         
-        # Highlight selected team and its direct collaborators
         if selected_team:
             if team == selected_team:
                 node_colors.append('#1f77b4')  # Primary blue for selected team
@@ -152,52 +177,23 @@ def create_team_visualization(selected_team=None):
         else:
             node_colors.append('lightblue')
             node_sizes.append(40)
-    
-    # Create edges (collaborations)
-    edge_x = []
-    edge_y = []
-    edge_colors = []
-    
-    for team, data in teams.items():
-        x0, y0 = data["Position"]
-        for collab in data["Key Collaborations"]:
-            if collab in teams:
-                x1, y1 = teams[collab]["Position"]
-                edge_x.extend([x0, x1, None])
-                edge_y.extend([y0, y1, None])
-                
-                # Highlight connections of selected team
-                if selected_team and (team == selected_team or collab == selected_team):
-                    edge_colors.extend(['#1f77b4', '#1f77b4', '#1f77b4'])  # Blue for active connections
-                else:
-                    edge_colors.extend(['#E1E5E8', '#E1E5E8', '#E1E5E8'])  # Gray for other connections
-    
-    # Create the visualization
-    fig = go.Figure()
-    
-    # Add edges
+
+    # Add nodes as a single trace
     fig.add_trace(go.Scatter(
-        x=edge_x, y=edge_y,
-        line=dict(color=edge_colors, width=2),
-        hoverinfo='none',
-        mode='lines'
-    ))
-    
-    # Add nodes
-    fig.add_trace(go.Scatter(
-        x=node_x, y=node_y,
+        x=node_x,
+        y=node_y,
         text=node_text,
         mode='markers+text',
-        hoverinfo='text',
         marker=dict(
-            size=node_sizes,
             color=node_colors,
-            line_width=2,
-            line=dict(color='white')
+            size=node_sizes,
+            line=dict(color='white', width=2)
         ),
-        textposition="middle center"
+        textposition="middle center",
+        hoverinfo='text',
+        showlegend=False
     ))
-    
+
     # Update layout
     fig.update_layout(
         showlegend=False,
@@ -206,7 +202,8 @@ def create_team_visualization(selected_team=None):
         xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         plot_bgcolor='white',
-        height=500
+        height=500,
+        width=800
     )
     
     return fig
@@ -242,7 +239,6 @@ def main():
             for collab in teams[selected_team]["Key Collaborations"]:
                 st.markdown(f"- {collab}")
 
-        # Add interaction hint
         st.markdown("---")
         st.markdown("""
         **Tip:** Use the dropdowns above to explore different teams and team members.
@@ -250,7 +246,6 @@ def main():
         """)
     
     with col1:
-        # Create visualization with selected team
         st.plotly_chart(create_team_visualization(selected_team), use_container_width=True)
         
         st.markdown("""
