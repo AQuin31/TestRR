@@ -285,6 +285,11 @@ def create_team_visualization(selected_team=None):
             line=dict(color='white', width=2)
         ),
         textposition="middle center",
+        textfont=dict(
+            color='white',  # Text color for department names
+            size=12,       # Font size
+            family="Arial, sans-serif"  # Font family
+        ),
         hoverinfo='text',
         showlegend=False
     ))
@@ -302,7 +307,7 @@ def create_team_visualization(selected_team=None):
     return fig
 
 def main():
-    st.title("SchoolsPLP Organizational Structure")
+    st.markdown("<h1 style='color: #1f77b4;'>SchoolsPLP Organizational Structure</h1>", unsafe_allow_html=True)
     
     teams = create_team_data()
     
