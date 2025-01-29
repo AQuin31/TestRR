@@ -101,7 +101,7 @@ def create_team_data():
                     "Reports_To": "Director of Innovation and Partnerships"
                 }
             },
-            "Position": [0, 1]  # Top middle
+            "Position": [0, 1.3]  # Moved Sales higher (was [0, 1])
         },
         "Virtual Instruction": {
             "Team Members": {
