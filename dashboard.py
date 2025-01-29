@@ -41,7 +41,7 @@ def create_team_data():
                     "Reports_To": "CFO"
                 }
             },
-            "Position": [0, 2]  # Top
+            "Position": [1.73, 1]  # Moving Finance to where Sales was
         },
         "Sales": {
             "Team Members": {
