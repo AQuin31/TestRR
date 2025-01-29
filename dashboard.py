@@ -324,7 +324,7 @@ def create_team_visualization(selected_team=None):
     return fig
 
 def main():
-    st.title("SchoolsPLP Organizational Structure")
+    st.markdown('<h1 style="margin-top: 0.5rem;">SchoolsPLP Organizational Structure</h1>', unsafe_allow_html=True)
     
     teams = create_team_data()
     
