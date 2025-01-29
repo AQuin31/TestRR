@@ -31,7 +31,7 @@ def create_team_data():
                     "Reports_To": "CEO"
                 }
             },
-            "Position": [0, 1]
+            "Position": [0, 0]  # Center position
         },
         "Finance": {
             "Team Members": {
@@ -41,7 +41,7 @@ def create_team_data():
                     "Reports_To": "CFO"
                 }
             },
-            "Position": [1, 0.5]
+            "Position": [0, 1]  # Top
         },
         "Sales": {
             "Team Members": {
@@ -101,7 +101,7 @@ def create_team_data():
                     "Reports_To": "Director of Innovation and Partnerships"
                 }
             },
-            "Position": [-1, 0.5]
+            "Position": [0.866, 0.5]  # 60 degrees
         },
         "Virtual Instruction": {
             "Team Members": {
@@ -116,7 +116,7 @@ def create_team_data():
                     "Reports_To": "Director of Virtual Learning"
                 }
             },
-            "Position": [-1, 0]
+            "Position": [0.866, -0.5]  # 120 degrees
         },
         "Support": {
             "Team Members": {
@@ -141,7 +141,7 @@ def create_team_data():
                     "Reports_To": "Senior Support Specialist and Coaching Lead"
                 }
             },
-            "Position": [0, 0]
+            "Position": [0, -1]  # Bottom
         },
         "Curriculum": {
             "Team Members": {
@@ -166,7 +166,7 @@ def create_team_data():
                     "Reports_To": "Director of Curriculum"
                 }
             },
-            "Position": [0.5, 0]
+            "Position": [-0.866, -0.5]  # 240 degrees
         },
         "Development": {
             "Team Members": {
@@ -196,7 +196,7 @@ def create_team_data():
                     "Reports_To": "Project Manager"
                 }
             },
-            "Position": [1, -0.5]
+            "Position": [-0.866, 0.5]  # 300 degrees
         },
         "Training": {
             "Team Members": {
@@ -211,7 +211,7 @@ def create_team_data():
                     "Reports_To": "Leadership Team"
                 }
             },
-            "Position": [-0.5, -0.5]
+            "Position": [0, 0.5]  # Right
         }
     }
 
