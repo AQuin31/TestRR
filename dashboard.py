@@ -1,11 +1,127 @@
 import streamlit as st
 import plotly.graph_objects as go
-from collections import defaultdict
 
 # Set page configuration
 st.set_page_config(page_title="SchoolsPLP Team Connections", layout="wide")
 
-# [Previous create_team_data() function remains the same]
+def create_team_data():
+    return {
+        "Leadership": {
+            "Team Members": {
+                "BJ Dines (CEO)": {
+                    "Role": "Chief Executive Officer",
+                    "Responsibilities": "Overall company strategy and leadership",
+                    "Key Projects": ["Strategic Planning", "Company Growth", "Partnership Development"]
+                },
+                "Leah Dines (CFO)": {
+                    "Role": "Chief Financial Officer",
+                    "Responsibilities": "Financial oversight, budgeting, and accounting",
+                    "Key Projects": ["Budget Planning", "Financial Analysis", "Resource Allocation"]
+                },
+                "Josh Leitz (COO)": {
+                    "Role": "Chief Operating Officer",
+                    "Responsibilities": "Manages operations, supports teams, and oversees curriculum",
+                    "Key Projects": ["Operations Management", "Team Coordination", "Process Improvement"]
+                },
+                "Brian Snyder (Dir. Innovation & Partnerships)": {
+                    "Role": "Director of Innovation & Partnerships",
+                    "Responsibilities": "Oversees SchoolsPLP Sales, Backbone, and EDS teams",
+                    "Key Projects": ["Partnership Development", "Innovation Initiatives", "Sales Strategy"]
+                }
+            },
+            "Key Collaborations": ["Educational Support", "Product", "Curriculum", "Virtual Learning"],
+            "Position": [0, 0]
+        },
+        "Educational Support": {
+            "Team Members": {
+                "LaRae Kendrick (Dir. Educational Support)": {
+                    "Role": "Director of Educational Support",
+                    "Responsibilities": "Leads training, implementation, and support teams",
+                    "Key Projects": ["Training Program Development", "Support Strategy", "Implementation Planning"]
+                },
+                "Gordon Gower (Sr. Support & Coaching Lead)": {
+                    "Role": "Senior Support & Coaching Lead",
+                    "Responsibilities": "Provides advanced educational support",
+                    "Key Projects": ["Support Team Leadership", "Coaching Program", "Quality Assurance"]
+                },
+                "Kim Schneper (Support & Integration Lead)": {
+                    "Role": "Support & Integration Lead",
+                    "Responsibilities": "Manages technical and process integration",
+                    "Key Projects": ["Integration Management", "Process Development", "Technical Support"]
+                },
+                "Kevin McCormick (Support & Education Lead)": {
+                    "Role": "Support & Education Lead",
+                    "Responsibilities": "Special projects and support initiatives",
+                    "Key Projects": ["Education Programs", "Support Projects", "Team Training"]
+                },
+                "Leslie King (Professional Trainer)": {
+                    "Role": "Professional Trainer",
+                    "Responsibilities": "Conducts training for schools and staff",
+                    "Key Projects": ["School Training", "Staff Development", "Training Materials"]
+                },
+                "Heather Caldwell (Professional Trainer)": {
+                    "Role": "Professional Trainer",
+                    "Responsibilities": "Conducts training for schools and staff",
+                    "Key Projects": ["School Training", "Staff Development", "Training Materials"]
+                }
+            },
+            "Key Collaborations": ["Leadership", "Product", "Curriculum"],
+            "Position": [-1, 1]
+        },
+        "Product": {
+            "Team Members": {
+                "Angeline Quinones (Project Manager)": {
+                    "Role": "Project Manager",
+                    "Responsibilities": "Leads software development and product design teams",
+                    "Key Projects": ["Product Development", "Team Management", "Release Planning"]
+                },
+                "Richard Metze (Software Dev)": {
+                    "Role": "Software Developer",
+                    "Responsibilities": "Develops and maintains company software",
+                    "Key Projects": ["Software Development", "Code Maintenance", "Feature Implementation"]
+                },
+                "Mayowa Akinyemi (Software Dev)": {
+                    "Role": "Software Developer",
+                    "Responsibilities": "Develops and maintains company software",
+                    "Key Projects": ["Software Development", "Code Maintenance", "Feature Implementation"]
+                },
+                "Joanne Delphia (Sr. Product Designer)": {
+                    "Role": "Senior Product Designer",
+                    "Responsibilities": "Leads UX/UI and product experience design",
+                    "Key Projects": ["UX Design", "UI Implementation", "User Research"]
+                },
+                "Seth Morris (LMS Admin)": {
+                    "Role": "LMS Administrator",
+                    "Responsibilities": "Manages learning management system",
+                    "Key Projects": ["LMS Administration", "System Maintenance", "User Support"]
+                }
+            },
+            "Key Collaborations": ["Leadership", "Educational Support", "Curriculum"],
+            "Position": [1, 1]
+        },
+        "Curriculum": {
+            "Team Members": {
+                "Kathe Arnold (Dir. Curriculum)": {
+                    "Role": "Director of Curriculum",
+                    "Responsibilities": "Oversees content development and contractor collaboration",
+                    "Key Projects": ["Curriculum Development", "Content Strategy", "Quality Assessment"]
+                }
+            },
+            "Key Collaborations": ["Leadership", "Educational Support", "Product", "Virtual Learning"],
+            "Position": [-1, -1]
+        },
+        "Virtual Learning": {
+            "Team Members": {
+                "Jeremy Gold (Dir. Virtual Learning)": {
+                    "Role": "Director of Virtual Learning",
+                    "Responsibilities": "Manages online learning coordination",
+                    "Key Projects": ["Virtual Program Management", "Online Learning Strategy", "Technology Integration"]
+                }
+            },
+            "Key Collaborations": ["Leadership", "Curriculum", "Educational Support"],
+            "Position": [1, -1]
+        }
+    }
 
 def create_team_visualization(selected_team=None):
     teams = create_team_data()
