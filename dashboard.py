@@ -13,12 +13,12 @@ def create_team_data():
                 "Leah Dines": {
                     "Role": "CFO",
                     "Responsibilities": "Financial oversight and management",
-                    "Reports_To": " "
+                    "Reports_To": "CEO"
                 },
                 "Brian Snyder": {
                     "Role": "Director of Innovation and Partnerships",
-                    "Responsibilities": "Oversees SchoolsPLP Sales, Backbone, and EDS teams",
-                    "Reports_To": " "
+                    "Responsibilities": "Oversees Sales, Backbone, and Virtual Instruction",
+                    "Reports_To": "CEO"
                 },
                 "Josh Leitz": {
                     "Role": "Chief Operations Officer",
@@ -27,7 +27,7 @@ def create_team_data():
                 },
                 "LaRae Kendrick": {
                     "Role": "Director of Educational Support and Implementation",
-                    "Responsibilities": "Leads educational support and implementation teams",
+                    "Responsibilities": "Leads educational support teams",
                     "Reports_To": "CEO"
                 }
             },
@@ -43,14 +43,74 @@ def create_team_data():
             },
             "Position": [1, 0.5]
         },
-        "Virtual Learning": {
+        "Sales": {
+            "Team Members": {
+                "Jeff Martin": {
+                    "Role": "SchoolsPLP Sales",
+                    "Responsibilities": "Sales representative",
+                    "Reports_To": "Director of Innovation and Partnerships"
+                },
+                "Craig Whitaker": {
+                    "Role": "SchoolsPLP Sales",
+                    "Responsibilities": "Sales representative",
+                    "Reports_To": "Director of Innovation and Partnerships"
+                },
+                "Brian Snyder": {
+                    "Role": "Backbone Team Lead",
+                    "Responsibilities": "Leads Backbone Communications",
+                    "Reports_To": "Director of Innovation and Partnerships"
+                },
+                "Matt West": {
+                    "Role": "Backbone Team Member",
+                    "Responsibilities": "Backbone Communications",
+                    "Reports_To": "Backbone Team Lead"
+                },
+                "Ken Behrendt": {
+                    "Role": "Backbone Team Member",
+                    "Responsibilities": "Backbone Communications",
+                    "Reports_To": "Backbone Team Lead"
+                },
+                "Aaron Eustariemann": {
+                    "Role": "EDS Reseller",
+                    "Responsibilities": "EDS Sales",
+                    "Reports_To": "Director of Innovation and Partnerships"
+                },
+                "Amanda Fouts": {
+                    "Role": "EDS Reseller",
+                    "Responsibilities": "EDS Sales",
+                    "Reports_To": "Director of Innovation and Partnerships"
+                },
+                "Gail Lanier": {
+                    "Role": "EDS Reseller",
+                    "Responsibilities": "EDS Sales",
+                    "Reports_To": "Director of Innovation and Partnerships"
+                },
+                "Rikki Black": {
+                    "Role": "AES Reseller",
+                    "Responsibilities": "AES Sales",
+                    "Reports_To": "Director of Innovation and Partnerships"
+                },
+                "Eric Moon": {
+                    "Role": "JNR Reseller",
+                    "Responsibilities": "JNR Sales",
+                    "Reports_To": "Director of Innovation and Partnerships"
+                },
+                "Roger Choate": {
+                    "Role": "Learning Partners Reseller",
+                    "Responsibilities": "Learning Partners Sales",
+                    "Reports_To": "Director of Innovation and Partnerships"
+                }
+            },
+            "Position": [-1, 0.5]
+        },
+        "Virtual Instruction": {
             "Team Members": {
                 "Jeremy Gold": {
                     "Role": "Director of Virtual Learning",
                     "Responsibilities": "Manages virtual learning programs",
                     "Reports_To": "Director of Innovation and Partnerships"
                 },
-                "Kiff Kanady": {
+                "Kifi Kanegy": {
                     "Role": "Academic Success Coordinator",
                     "Responsibilities": "Coordinates academic success initiatives",
                     "Reports_To": "Director of Virtual Learning"
@@ -58,57 +118,32 @@ def create_team_data():
             },
             "Position": [-1, 0]
         },
-        "Sales": {
-            "Team Members": {
-                "Jeff Martin": {
-                    "Role": "Sales",
-                    "Responsibilities": "SchoolsPLP Sales",
-                    "Reports_To": "Director of Innovation and Partnerships"
-                },
-                "Craig Whitaker": {
-                    "Role": "Sales",
-                    "Responsibilities": "SchoolsPLP Sales",
-                    "Reports_To": "Director of Innovation and Partnerships"
-                }
-            },
-            "Position": [-1, 0.5]
-        },
-        "Educational Support": {
+        "Support": {
             "Team Members": {
                 "Gordon Gower": {
-                    "Role": "Senior Support and Coaching Lead",
+                    "Role": "Senior Support Specialist and Coaching Lead",
                     "Responsibilities": "Leads support and coaching initiatives",
-                    "Reports_To": "Director of Educational Support"
+                    "Reports_To": "Director of Educational Support and Implementation"
                 },
-                "Kim Schneper": {
+                "Kim Schnepper": {
                     "Role": "Support Specialist and Integration Lead",
                     "Responsibilities": "Manages support and integration",
-                    "Reports_To": "Senior Support and Coaching Lead"
+                    "Reports_To": "Senior Support Specialist and Coaching Lead"
                 },
                 "Kevin McCormick": {
                     "Role": "Support Specialist and Special Education Lead",
                     "Responsibilities": "Leads special education support",
-                    "Reports_To": "Support Specialist and Integration Lead"
+                    "Reports_To": "Senior Support Specialist and Coaching Lead"
                 },
                 "Gracie Perez": {
                     "Role": "Support Specialist and Special Projects Lead",
                     "Responsibilities": "Manages special projects",
-                    "Reports_To": "Support Specialist and Special Education Lead"
-                },
-                "Leslie King": {
-                    "Role": "Professional Trainer",
-                    "Responsibilities": "Conducts professional training",
-                    "Reports_To": "Director of Educational Support"
-                },
-                "Heather Caldwell": {
-                    "Role": "Professional Trainer",
-                    "Responsibilities": "Conducts professional training",
-                    "Reports_To": "Director of Educational Support"
+                    "Reports_To": "Senior Support Specialist and Coaching Lead"
                 }
             },
             "Position": [0, 0]
         },
-        "Operations": {
+        "Curriculum": {
             "Team Members": {
                 "Kathe Arnold": {
                     "Role": "Director of Curriculum",
@@ -123,22 +158,22 @@ def create_team_data():
                 "Brandon Hellman": {
                     "Role": "Science Curriculum Specialist",
                     "Responsibilities": "Science curriculum development",
-                    "Reports_To": "Curriculum Specialist"
+                    "Reports_To": "Director of Curriculum"
                 },
                 "Aiyana Pomato": {
-                    "Role": "Standards Alignments, SSELA",
-                    "Responsibilities": "Standards alignment for SSELA",
-                    "Reports_To": "Science Curriculum Specialist"
+                    "Role": "Standards Alignments, SS/ELA",
+                    "Responsibilities": "Standards alignment for SS/ELA",
+                    "Reports_To": "Director of Curriculum"
                 }
             },
             "Position": [0.5, 0]
         },
-        "Technology": {
+        "Development": {
             "Team Members": {
                 "Angeline Quinones": {
                     "Role": "Project Manager",
                     "Responsibilities": "Manages software development projects",
-                    "Reports_To": "COO"
+                    "Reports_To": "Leadership Team"
                 },
                 "Richard Metze": {
                     "Role": "Software Developer",
@@ -159,31 +194,24 @@ def create_team_data():
                     "Role": "LMS Administrator",
                     "Responsibilities": "Learning Management System administration",
                     "Reports_To": "Project Manager"
-                },
-                "Micah Stetson": {
-                    "Role": "Software Developer/System Architect",
-                    "Responsibilities": "System architecture and development",
-                    "Reports_To": "Project Manager"
                 }
             },
             "Position": [1, -0.5]
         },
-        "Backbone": {
+        "Training": {
             "Team Members": {
-                "Brian Snyder": {
-                    "Role": "Team Lead",
-                    "Reports_To": "Director of Innovation and Partnerships"
+                "Leslie King": {
+                    "Role": "Professional Trainer",
+                    "Responsibilities": "Conducts professional training",
+                    "Reports_To": "Leadership Team"
                 },
-                "Matt West": {
-                    "Role": "Team Member",
-                    "Reports_To": "Team Lead"
-                },
-                "Ken Behrendt": {
-                    "Role": "Team Member",
-                    "Reports_To": "Team Lead"
+                "Heather Caldwell": {
+                    "Role": "Professional Trainer",
+                    "Responsibilities": "Conducts professional training",
+                    "Reports_To": "Leadership Team"
                 }
             },
-            "Position": [-1, -0.5]
+            "Position": [-0.5, -0.5]
         }
     }
 
@@ -200,20 +228,23 @@ def create_team_visualization(selected_team=None):
             if team != other_team:
                 for member in other_data["Team Members"].values():
                     reports_to = member.get("Reports_To", "")
-                    if any(reports_to == tm.get("Role", "") for tm in data["Team Members"].values()):
+                    if reports_to == "Leadership Team" and team == "Leadership":
                         x1, y1 = other_data["Position"]
-                        
-                        # Determine if this connection should be highlighted
-                        if selected_team and (team == selected_team or other_team == selected_team):
-                            color = '#1f77b4'  # Blue for active connections
-                            width = 2
-                        else:
-                            color = '#E1E5E8'  # Gray for inactive connections
-                            width = 1
-                        
+                        color = '#1f77b4' if selected_team in [team, other_team] else '#E1E5E8'
+                        width = 2 if selected_team in [team, other_team] else 1
                         fig.add_trace(go.Scatter(
-                            x=[x0, x1],
-                            y=[y0, y1],
+                            x=[x0, x1], y=[y0, y1],
+                            mode='lines',
+                            line=dict(color=color, width=width),
+                            hoverinfo='none',
+                            showlegend=False
+                        ))
+                    elif any(reports_to == tm.get("Role", "") for tm in data["Team Members"].values()):
+                        x1, y1 = other_data["Position"]
+                        color = '#1f77b4' if selected_team in [team, other_team] else '#E1E5E8'
+                        width = 2 if selected_team in [team, other_team] else 1
+                        fig.add_trace(go.Scatter(
+                            x=[x0, x1], y=[y0, y1],
                             mode='lines',
                             line=dict(color=color, width=width),
                             hoverinfo='none',
@@ -234,10 +265,10 @@ def create_team_visualization(selected_team=None):
         
         if selected_team:
             if team == selected_team:
-                node_colors.append('#1f77b4')  # Primary blue for selected team
+                node_colors.append('#1f77b4')
                 node_sizes.append(50)
             else:
-                node_colors.append('#E1E5E8')  # Gray for other teams
+                node_colors.append('#E1E5E8')
                 node_sizes.append(35)
         else:
             node_colors.append('lightblue')
@@ -298,8 +329,10 @@ def main():
         # Add manager note
         st.markdown("---")
         st.markdown("""
-        **Note:** Black outlined boxes in the org chart denote Managers 
-        responsible for overseeing teams and conducting performance reviews.
+        **Note:** The Leadership Team consists of BJ Dines (CEO), 
+        Leah Dines (CFO), Brian Snyder (Director of Innovation and Partnerships), 
+        LaRae Kendrick (Director of Educational Support), and 
+        Josh Leitz (Chief Operations Officer).
         """)
         
         st.markdown("""
