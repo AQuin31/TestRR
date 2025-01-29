@@ -120,7 +120,7 @@ def create_team_data():
             },
             "Key Collaborations": ["Leadership", "Curriculum", "Educational Support"],
             "Position": [1, -1]
-        }
+        },
          "Sales": {
             "Team Members": {
                 "Brian Snyder": {
